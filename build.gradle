@@ -1,0 +1,49 @@
+plugins {
+	id 'fabric-loom' version '0.2.4-SNAPSHOT'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+	mavenCentral()
+	maven { url "https://minecraft.curseforge.com/api/maven/" }
+	maven { url 'http://maven.sargunv.s3-website-us-west-2.amazonaws.com/' }
+}
+minecraft {}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	modApi "net.fabricmc:fabric-loader:${project.loader_version}"
+	modApi "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	modRuntime "me.sargunvohra.mcmods:auto-config:1.1.2+mc1.14.1"
+	modRuntime "io.github.prospector.modmenu:ModMenu:1.6.3-101"
+	modRuntime "foamfix-for-minecraft:foamfix:0.12.1"
+	modRuntime "me.shedaniel:RoughlyEnoughItems:2.9.7+build.140"
+}
+
+processResources {
+	inputs.property "version", project.version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include "fabric.mod.json"
+		expand "version": project.version
+	}
+
+	from(sourceSets.main.resources.srcDirs) {
+		exclude "fabric.mod.json"
+	}
+}
+
+tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = "sources"
+	from sourceSets.main.allSource
+}
+jar { from "LICENSE" }

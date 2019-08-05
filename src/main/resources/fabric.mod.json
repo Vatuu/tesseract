@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "modid",
+  "version": "${version}",
+
+  "name": "",
+  "description": "",
+  "authors": [ "swordglowsblue" ],
+
+  "contact": {
+    "homepage": "https://curseforge.com/minecraft/mc-mods/modid",
+    "sources": "https://github.com/swordglowsblue/modid"
+  },
+
+  "license": "MIT",
+  "icon": "assets/modid/icon.png",
+
+  "entrypoints": {
+    "main": [ "com.swordglowsblue.modid.ModId" ],
+    "client": [ "com.swordglowsblue.modid.ModIdClient" ]
+  },
+  "mixins": [ "modid.mixins.json" ],
+
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}
