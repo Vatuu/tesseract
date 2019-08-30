@@ -1,25 +1,26 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "tesseract",
   "version": "${version}",
 
-  "name": "",
-  "description": "",
-  "authors": [ "swordglowsblue" ],
+  "name": "Tesseract API",
+  "description": "A lightweight dimensional API for disposable, low-overhead pocket dimensions.",
+  "authors": [ "Vatuu" ],
 
   "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/modid",
-    "sources": "https://github.com/swordglowsblue/modid"
+    "homepage": "https://curseforge.com/minecraft/mc-mods/tesseract",
+    "sources": "https://github.com/vatuu/tesseract"
   },
 
   "license": "MIT",
   "icon": "assets/modid/icon.png",
 
   "entrypoints": {
-    "main": [ "com.swordglowsblue.modid.ModId" ],
-    "client": [ "com.swordglowsblue.modid.ModIdClient" ]
+    "main": [ "dev.vatuu.tesseract.Tesseract" ]
   },
-  "mixins": [ "modid.mixins.json" ],
+  "mixins": [
+    "tesseract.mixins.json"
+  ],
 
   "depends": {
     "fabricloader": ">=0.4.0",
