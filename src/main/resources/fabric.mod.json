@@ -8,12 +8,15 @@
   "authors": [ "Vatuu" ],
 
   "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/tesseract",
+    "homepage": "https://curseforge.com/minecraft/mc-mods/tesseract-api",
     "sources": "https://github.com/vatuu/tesseract"
   },
 
   "license": "MIT",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/tesseract/icon.png",
+  "custom": {
+    "modmenu:api": true
+  },
 
   "entrypoints": {
     "main": [ "dev.vatuu.tesseract.Tesseract" ]
@@ -23,7 +26,7 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.4.0",
-    "fabric": "*"
+    "fabricloader": ">=0.4.0-",
+    "fabric-events-lifecycle-v0": ">=0.1.1-"
   }
 }

@@ -1,6 +1,5 @@
 package dev.vatuu.tesseract.extensions.mixins;
 
-import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.world.DimensionTypeRegistry;
 import dev.vatuu.tesseract.world.TesseractDimension;
 import dev.vatuu.tesseract.world.TesseractDimensionType;
@@ -51,12 +50,10 @@ public abstract class MinecraftServerMixin {
 
     @Inject(method = "getWorld", at = @At("RETURN"), cancellable = true)
     private void getWorld(DimensionType dimensionType, CallbackInfoReturnable<ServerWorld> cir) {
-        System.out.println(dimensionType);
         Validate.notNull(dimensionType, "Dimension type must not be NULL");
         if(dimensionType != DimensionType.OVERWORLD && cir.getReturnValue() == null) {
             ServerWorld overWorld = worlds.get(DimensionType.OVERWORLD);
             Validate.notNull(overWorld, "Overworld not loaded!");
-            Tesseract.getLogger().debug("Loading dimension {}", DimensionType.getId(dimensionType));
             ServerWorld world = new SecondaryServerWorld(overWorld, (MinecraftServer)(Object)this, ((MinecraftServer)(Object)this).getWorkerExecutor(), this.saveHandler, dimensionType, this.profiler, generationProgress);
             worlds.put(dimensionType, world);
             cir.setReturnValue(world);
