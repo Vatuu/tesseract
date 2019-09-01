@@ -1,6 +1,6 @@
-package dev.vatuu.tesseract.extensions.mixins;
+package dev.vatuu.tesseract.impl.extensions.mixins;
 
-import dev.vatuu.tesseract.world.TesseractDimension;
+import dev.vatuu.tesseract.impl.world.TesseractDimension;
 import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Final;

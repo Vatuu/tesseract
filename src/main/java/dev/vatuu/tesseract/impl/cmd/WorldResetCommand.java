@@ -1,13 +1,13 @@
-package dev.vatuu.tesseract.cmd;
+package dev.vatuu.tesseract.impl.cmd;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
-import dev.vatuu.tesseract.world.DimensionState;
-import dev.vatuu.tesseract.world.TesseractDimension;
-import dev.vatuu.tesseract.world.TesseractDimensionType;
+import dev.vatuu.tesseract.api.DimensionState;
+import dev.vatuu.tesseract.impl.world.TesseractDimension;
+import dev.vatuu.tesseract.impl.world.TesseractDimensionType;
 import net.minecraft.command.arguments.DimensionArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;

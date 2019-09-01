@@ -1,4 +1,4 @@
-package dev.vatuu.tesseract.extensions.mixins;
+package dev.vatuu.tesseract.impl.extensions.mixins;
 
 import com.google.common.collect.BiMap;
 import net.minecraft.util.Identifier;

@@ -1,4 +1,4 @@
-package dev.vatuu.tesseract.extensions;
+package dev.vatuu.tesseract.impl.extensions;
 
 import net.minecraft.util.math.BlockPos;
 

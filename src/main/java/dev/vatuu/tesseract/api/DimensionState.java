@@ -1,4 +1,4 @@
-package dev.vatuu.tesseract.world;
+package dev.vatuu.tesseract.api;
 
 public enum DimensionState {
     SAVE(false, false, false),

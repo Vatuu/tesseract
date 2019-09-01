@@ -19,7 +19,7 @@
   },
 
   "entrypoints": {
-    "main": [ "dev.vatuu.tesseract.Tesseract" ]
+    "main": [ "dev.vatuu.tesseract.impl.Tesseract" ]
   },
   "mixins": [
     "tesseract.mixins.json"

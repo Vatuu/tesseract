@@ -1,22 +1,31 @@
-package dev.vatuu.tesseract.world;
+package dev.vatuu.tesseract.impl.world;
 
-import dev.vatuu.tesseract.extensions.mixins.SimpleRegistryMixin;
+import dev.vatuu.tesseract.impl.extensions.mixins.SimpleRegistryMixin;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.BiFunction;
 
-public class DimensionRegistry {
+public class DimensionRegistry implements dev.vatuu.tesseract.api.DimensionRegistry {
 
-    private Map<Integer, DimensionType> registered;
+    private static DimensionRegistry INSTANCE;
 
-    public DimensionRegistry(){
-        registered = new HashMap<>();
+    private Int2ObjectMap<DimensionType> registered;
+
+    private DimensionRegistry(){
+        registered = Int2ObjectMaps.emptyMap();
+    }
+
+    public static DimensionRegistry getInstance(){
+        if(INSTANCE == null)
+            return (INSTANCE = new DimensionRegistry());
+        else
+            return INSTANCE;
     }
 
     public DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> create){

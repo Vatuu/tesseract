@@ -1,10 +1,10 @@
-package dev.vatuu.tesseract.world;
+package dev.vatuu.tesseract.impl.world;
 
-import dev.vatuu.tesseract.Tesseract;
-import dev.vatuu.tesseract.extensions.FogColourFunction;
-import dev.vatuu.tesseract.extensions.RenderFogFunction;
-import dev.vatuu.tesseract.extensions.SpawnChunkPosFunction;
-import dev.vatuu.tesseract.extensions.SpawnTopFunction;
+import dev.vatuu.tesseract.impl.Tesseract;
+import dev.vatuu.tesseract.impl.extensions.FogColourFunction;
+import dev.vatuu.tesseract.impl.extensions.RenderFogFunction;
+import dev.vatuu.tesseract.impl.extensions.SpawnChunkPosFunction;
+import dev.vatuu.tesseract.impl.extensions.SpawnTopFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.border.WorldBorder;
@@ -15,13 +15,9 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 
 import java.util.function.Function;
 
-public class DimensionBuilder {
+public class DimensionBuilder implements dev.vatuu.tesseract.api.DimensionBuilder {
 
-    private DimensionSettings dim;
-
-    public DimensionBuilder(){
-        dim = new DimensionSettings();
-    }
+    private DimensionSettings dim = new DimensionSettings();
 
     public DimensionBuilder bedsExplode(boolean shouldExplode){
         dim.shouldBedsExplode = shouldExplode;

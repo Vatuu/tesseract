@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "dev.vatuu.tesseract.extensions.mixins",
+  "package": "dev.vatuu.tesseract.impl.extensions.mixins",
   "compatibilityLevel": "JAVA_8",
   "injectors": { "defaultRequire": 1 },
 

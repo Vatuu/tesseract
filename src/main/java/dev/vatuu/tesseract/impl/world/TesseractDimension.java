@@ -1,5 +1,6 @@
-package dev.vatuu.tesseract.world;
+package dev.vatuu.tesseract.impl.world;
 
+import dev.vatuu.tesseract.api.DimensionState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;

@@ -1,8 +1,8 @@
-package dev.vatuu.tesseract.extensions.mixins;
+package dev.vatuu.tesseract.impl.extensions.mixins;
 
-import dev.vatuu.tesseract.world.DimensionState;
-import dev.vatuu.tesseract.world.DimensionRegistry;
-import dev.vatuu.tesseract.world.TesseractDimension;
+import dev.vatuu.tesseract.api.DimensionState;
+import dev.vatuu.tesseract.impl.world.DimensionRegistry;
+import dev.vatuu.tesseract.impl.world.TesseractDimension;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.SecondaryServerWorld;

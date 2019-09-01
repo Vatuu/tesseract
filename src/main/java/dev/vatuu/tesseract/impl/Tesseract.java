@@ -1,19 +1,20 @@
-package dev.vatuu.tesseract;
+package dev.vatuu.tesseract.impl;
 
-import dev.vatuu.tesseract.cmd.WorldResetCommand;
-import dev.vatuu.tesseract.world.DimensionRegistry;
+import dev.vatuu.tesseract.impl.cmd.WorldResetCommand;
+import dev.vatuu.tesseract.impl.world.DimensionBuilder;
+import dev.vatuu.tesseract.impl.world.DimensionRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.dimension.DimensionType;
 
 public class Tesseract implements ModInitializer {
 
-    public static DimensionRegistry dimensionRegistry;
-
     @Override
     public void onInitialize() {
-        dimensionRegistry = new DimensionRegistry();
-        /*DimensionType cube = dimensionRegistry.registerDimensionType(
+        DimensionType cube = DimensionRegistry.getInstance().registerDimensionType(
                 new Identifier("tesseract", "cube"),
                 true,
                 (w, t) -> new DimensionBuilder()
@@ -23,7 +24,7 @@ public class Tesseract implements ModInitializer {
                     .renderSkybox(true)
                     .renderFog(false)
                 .build(w, t)
-        );*/
+        );
 
         ServerStartCallback.EVENT.register((ci) -> {
             WorldResetCommand.register(ci.getCommandManager().getDispatcher());
