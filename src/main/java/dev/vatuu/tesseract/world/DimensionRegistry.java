@@ -1,6 +1,5 @@
 package dev.vatuu.tesseract.world;
 
-import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.extensions.mixins.SimpleRegistryMixin;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -12,11 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-public class DimensionTypeRegistry {
+public class DimensionRegistry {
 
     private Map<Integer, DimensionType> registered;
 
-    public DimensionTypeRegistry(){
+    public DimensionRegistry(){
         registered = new HashMap<>();
     }
 

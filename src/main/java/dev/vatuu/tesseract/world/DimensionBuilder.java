@@ -1,10 +1,11 @@
 package dev.vatuu.tesseract.world;
 
 import dev.vatuu.tesseract.Tesseract;
-import dev.vatuu.tesseract.extensions.TriFunction;
+import dev.vatuu.tesseract.extensions.FogColourFunction;
+import dev.vatuu.tesseract.extensions.RenderFogFunction;
+import dev.vatuu.tesseract.extensions.SpawnChunkPosFunction;
+import dev.vatuu.tesseract.extensions.SpawnTopFunction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.dimension.Dimension;
@@ -12,7 +13,6 @@ import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class DimensionBuilder {
@@ -48,7 +48,7 @@ public class DimensionBuilder {
         return this;
     }
 
-    public DimensionBuilder renderFog(BiFunction<Integer, Integer, Boolean> bi){
+    public DimensionBuilder renderFog(RenderFogFunction bi){
         dim.shouldRenderFog = bi;
         return this;
     }
@@ -58,17 +58,17 @@ public class DimensionBuilder {
         return this;
     }
 
-    public DimensionBuilder fogColour(BiFunction<Float, Float, Vec3d> bi){
+    public DimensionBuilder fogColour(FogColourFunction bi){
         dim.fogColour = bi;
         return this;
     }
 
-    public DimensionBuilder spawningBlockChunk(BiFunction<ChunkPos, Boolean, BlockPos> bi){
+    public DimensionBuilder spawningBlockChunk(SpawnChunkPosFunction bi){
         dim.spawningBlockChunk = bi;
         return this;
     }
 
-    public DimensionBuilder topSpawningBlockPos(TriFunction<Integer, Integer, Boolean, BlockPos> tri){
+    public DimensionBuilder topSpawningBlockPos(SpawnTopFunction tri){
         dim.topSpawningBlockPos = tri;
         return this;
     }

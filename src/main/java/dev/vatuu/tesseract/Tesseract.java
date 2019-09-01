@@ -1,22 +1,18 @@
 package dev.vatuu.tesseract;
 
-import dev.vatuu.tesseract.world.DimensionBuilder;
 import dev.vatuu.tesseract.cmd.WorldResetCommand;
-import dev.vatuu.tesseract.world.DimensionTypeRegistry;
+import dev.vatuu.tesseract.world.DimensionRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.dimension.DimensionType;
 
 public class Tesseract implements ModInitializer {
 
-    public static DimensionTypeRegistry dimensionRegistry;
+    public static DimensionRegistry dimensionRegistry;
 
     @Override
     public void onInitialize() {
-        dimensionRegistry = new DimensionTypeRegistry();
+        dimensionRegistry = new DimensionRegistry();
         /*DimensionType cube = dimensionRegistry.registerDimensionType(
                 new Identifier("tesseract", "cube"),
                 true,

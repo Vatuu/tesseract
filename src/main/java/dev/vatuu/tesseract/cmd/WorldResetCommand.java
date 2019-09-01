@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import dev.vatuu.tesseract.world.DimensionState;
 import dev.vatuu.tesseract.world.TesseractDimension;
 import dev.vatuu.tesseract.world.TesseractDimensionType;
 import net.minecraft.command.arguments.DimensionArgumentType;
@@ -36,7 +37,7 @@ public class WorldResetCommand {
             throw INVALID_DIMENSION.create(Registry.DIMENSION.getId(t));
         }
         ServerWorld w = src.getSource().getPlayer().getServer().getWorld(t);
-        ((TesseractDimension)w.getServer().getWorld(t).getDimension()).setSaveState(false, unregister);
+        ((TesseractDimension)w.getServer().getWorld(t).getDimension()).setSaveState(DimensionState.getByValues(true, true, unregister));
         w.getServer().save(true, true, false);
         return 1;
     }

@@ -1,8 +1,8 @@
 package dev.vatuu.tesseract.extensions.mixins;
 
-import dev.vatuu.tesseract.world.DimensionTypeRegistry;
+import dev.vatuu.tesseract.world.DimensionState;
+import dev.vatuu.tesseract.world.DimensionRegistry;
 import dev.vatuu.tesseract.world.TesseractDimension;
-import dev.vatuu.tesseract.world.TesseractDimensionType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.SecondaryServerWorld;
@@ -70,15 +70,17 @@ public abstract class MinecraftServerMixin {
     @Redirect(method = "save(ZZZ)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;save(Lnet/minecraft/util/ProgressListener;ZZ)V"))
     private void save(ServerWorld w, ProgressListener listener, boolean b1, boolean b2) throws SessionLockException{
         Iterator<ServerWorld> it = apcraftvolvic.get();
-        if(w.getDimension().getType() instanceof TesseractDimensionType && it != null){
-            if(!((TesseractDimension)w.dimension).shouldSave())
-                unloadWorld(w, ((TesseractDimension)w.dimension).shouldUnregister(), it);
+        if(w.getDimension() instanceof TesseractDimension && it != null){
+            DimensionState state = ((TesseractDimension)w.getDimension()).getSaveState();
+            if(state.shouldUnload()) unloadWorld(w, it);
+            if(state.shouldReset()) resetWorld(w); else w.save(listener, b1, b2);
+            if(state.shouldUnregister()) unregister(w.getDimension().getType());
         }else{
             w.save(listener, b1, b2);
         }
     }
 
-    private void unloadWorld(ServerWorld w, boolean unregister, Iterator<ServerWorld> it){
+    private void unloadWorld(ServerWorld w, Iterator<ServerWorld> it){
         if(!w.getPlayers().isEmpty()){
             BlockPos entryPoint = ((TesseractDimension)w.dimension).entryPoint;
             w.getPlayers().forEach((p) ->  p.teleport(
@@ -88,18 +90,27 @@ public abstract class MinecraftServerMixin {
                     entryPoint.getZ(),
                     p.pitch, p.yaw));
         }
-        w.savingDisabled = true;
 
         try{
             w.close();
-            File f = w.dimension.getType().getFile(w.getSaveHandler().getWorldDir());
-            FileUtils.deleteDirectory(f);
         }catch(IOException e){
             e.printStackTrace();
         }
 
         it.remove();
-        if(unregister)
-            DimensionTypeRegistry.unregister(w.dimension.getType());
+    }
+
+    private void resetWorld(ServerWorld w){
+        w.savingDisabled = true;
+        try{
+            File f = w.dimension.getType().getFile(w.getSaveHandler().getWorldDir());
+            FileUtils.deleteDirectory(f);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void unregister(DimensionType type){
+        DimensionRegistry.unregister(type);
     }
 }

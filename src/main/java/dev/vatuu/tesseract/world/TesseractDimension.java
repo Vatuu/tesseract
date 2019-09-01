@@ -12,17 +12,17 @@ import net.minecraft.world.gen.chunk.*;
 public class TesseractDimension extends OverworldDimension {
 
     private DimensionType type;
-    private DimensionState shouldSave;
+    private DimensionState saveState;
     private DimensionSettings settings;
 
     public BlockPos entryPoint;
 
 
-    public TesseractDimension(World w, DimensionType t, DimensionSettings s){
+    TesseractDimension(World w, DimensionType t, DimensionSettings s){
         super(w, t);
         this.type = t;
         this.settings = s;
-        this.shouldSave = DimensionState.SAVE;
+        this.saveState = DimensionState.SAVE;
         this.entryPoint = new BlockPos(0, 64, 0);
     }
 
@@ -41,20 +41,6 @@ public class TesseractDimension extends OverworldDimension {
     @Override public boolean shouldRenderFog(int i1, int i2) { return settings.shouldRenderFog.apply(i1, i2); }
     @Override public DimensionType getType() { return type; }
 
-    //Dimension Management Stuff
-    public boolean shouldSave() {
-        return shouldSave == DimensionState.SAVE;
-    }
-    public boolean shouldUnregister() {
-        return shouldSave == DimensionState.UNLOAD_UNREGISTER;
-    }
-    public void setSaveState(boolean shouldSave, boolean unregister){
-        this.shouldSave = shouldSave ? DimensionState.SAVE : (unregister ? DimensionState.UNLOAD_UNREGISTER : DimensionState.UNLOAD);
-    }
-
-    private enum DimensionState {
-        SAVE,
-        UNLOAD,
-        UNLOAD_UNREGISTER
-    }
+    public DimensionState getSaveState() { return saveState; }
+    public void setSaveState(DimensionState state) { saveState = state; }
 }

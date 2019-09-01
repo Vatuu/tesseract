@@ -1,7 +1,6 @@
 package dev.vatuu.tesseract.extensions.mixins;
 
 import dev.vatuu.tesseract.world.TesseractDimension;
-import dev.vatuu.tesseract.world.TesseractDimensionType;
 import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Final;
@@ -18,8 +17,8 @@ public abstract class ServerChunkManagerMixin {
 
     @Inject(method = "save(Z)V", at = @At("HEAD"), cancellable = true)
     private void save(boolean boolean_1, CallbackInfo ci){
-        if(world.dimension.getType() instanceof TesseractDimensionType){
-            if(!((TesseractDimension)world.dimension).shouldSave())
+        if(world.dimension instanceof TesseractDimension){
+            if(((TesseractDimension)world.dimension).getSaveState().shouldReset())
                 ci.cancel();
         }
     }
