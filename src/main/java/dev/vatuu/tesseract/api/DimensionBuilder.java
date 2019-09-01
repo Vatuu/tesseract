@@ -1,11 +1,9 @@
 package dev.vatuu.tesseract.api;
 
-import dev.vatuu.tesseract.impl.Tesseract;
-import dev.vatuu.tesseract.impl.extensions.FogColourFunction;
-import dev.vatuu.tesseract.impl.extensions.RenderFogFunction;
-import dev.vatuu.tesseract.impl.extensions.SpawnChunkPosFunction;
-import dev.vatuu.tesseract.impl.extensions.SpawnTopFunction;
-import dev.vatuu.tesseract.impl.world.TesseractDimension;
+import dev.vatuu.tesseract.api.extensions.FogColourFunction;
+import dev.vatuu.tesseract.api.extensions.RenderFogFunction;
+import dev.vatuu.tesseract.api.extensions.SpawnChunkPosFunction;
+import dev.vatuu.tesseract.api.extensions.SpawnTopFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.border.WorldBorder;

@@ -1,4 +1,4 @@
-package dev.vatuu.tesseract.impl.extensions;
+package dev.vatuu.tesseract.api.extensions;
 
 import net.minecraft.util.math.Vec3d;
 
