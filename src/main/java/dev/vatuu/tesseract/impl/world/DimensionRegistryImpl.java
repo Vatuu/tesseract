@@ -1,5 +1,6 @@
 package dev.vatuu.tesseract.impl.world;
 
+import dev.vatuu.tesseract.api.DimensionRegistry;
 import dev.vatuu.tesseract.impl.extensions.mixins.SimpleRegistryMixin;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
@@ -11,19 +12,19 @@ import net.minecraft.world.dimension.DimensionType;
 
 import java.util.function.BiFunction;
 
-public class DimensionRegistry implements dev.vatuu.tesseract.api.DimensionRegistry {
+public class DimensionRegistryImpl implements DimensionRegistry {
 
-    private static DimensionRegistry INSTANCE;
+    private static DimensionRegistryImpl INSTANCE;
 
     private Int2ObjectMap<DimensionType> registered;
 
-    private DimensionRegistry(){
+    private DimensionRegistryImpl(){
         registered = Int2ObjectMaps.emptyMap();
     }
 
-    public static DimensionRegistry getInstance(){
+    public static DimensionRegistryImpl getInstance(){
         if(INSTANCE == null)
-            return (INSTANCE = new DimensionRegistry());
+            return (INSTANCE = new DimensionRegistryImpl());
         else
             return INSTANCE;
     }

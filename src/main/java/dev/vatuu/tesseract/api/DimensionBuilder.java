@@ -4,6 +4,7 @@ import dev.vatuu.tesseract.api.extensions.FogColourFunction;
 import dev.vatuu.tesseract.api.extensions.RenderFogFunction;
 import dev.vatuu.tesseract.api.extensions.SpawnChunkPosFunction;
 import dev.vatuu.tesseract.api.extensions.SpawnTopFunction;
+import dev.vatuu.tesseract.impl.world.DimensionBuilderImpl;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.border.WorldBorder;
@@ -14,7 +15,9 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 
 import java.util.function.Function;
 
-public interface    DimensionBuilder {
+public interface DimensionBuilder {
+
+    static DimensionBuilder create() { return new DimensionBuilderImpl(); }
 
     DimensionBuilder bedsExplode(boolean shouldExplode);
 
