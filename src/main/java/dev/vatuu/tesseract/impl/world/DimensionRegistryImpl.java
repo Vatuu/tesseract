@@ -1,6 +1,7 @@
 package dev.vatuu.tesseract.impl.world;
 
 import dev.vatuu.tesseract.api.DimensionRegistry;
+import dev.vatuu.tesseract.api.DimensionState;
 import dev.vatuu.tesseract.impl.extensions.mixins.SimpleRegistryMixin;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
@@ -23,10 +24,8 @@ public class DimensionRegistryImpl implements DimensionRegistry {
     }
 
     public static DimensionRegistryImpl getInstance(){
-        if(INSTANCE == null)
-            return (INSTANCE = new DimensionRegistryImpl());
-        else
-            return INSTANCE;
+        if(INSTANCE == null) return (INSTANCE = new DimensionRegistryImpl());
+        else return INSTANCE;
     }
 
     public DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> create){

@@ -12,4 +12,5 @@ A lightweight dimensional API for disposable, low-overhead pocket dimensions.
 - Separation
 - WorldGeneration Templates (Flat, SpawnPlatform, whatever)
 - WorldGeneration Utilities/Builder
+- Portal Primitives
 - `.explodeBees(boolean)`
