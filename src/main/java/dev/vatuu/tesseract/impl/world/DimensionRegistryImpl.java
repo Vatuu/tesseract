@@ -1,10 +1,8 @@
 package dev.vatuu.tesseract.impl.world;
 
 import dev.vatuu.tesseract.api.DimensionRegistry;
-import dev.vatuu.tesseract.api.DimensionState;
 import dev.vatuu.tesseract.impl.extensions.mixins.SimpleRegistryMixin;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -17,10 +15,10 @@ public class DimensionRegistryImpl implements DimensionRegistry {
 
     private static DimensionRegistryImpl INSTANCE;
 
-    private Int2ObjectMap<DimensionType> registered;
+    private Int2ObjectArrayMap<DimensionType> registered;
 
     private DimensionRegistryImpl(){
-        registered = Int2ObjectMaps.emptyMap();
+        registered = new Int2ObjectArrayMap<>();
     }
 
     public static DimensionRegistryImpl getInstance(){

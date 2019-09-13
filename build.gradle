@@ -1,5 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.2.4-SNAPSHOT'
+	id 'maven-publish'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -45,3 +46,18 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	from sourceSets.main.allSource
 }
 jar { from "LICENSE" }
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifact(remapJar.output) {
+				builtBy remapJar
+			}
+			artifact(sourcesJar) {
+				builtBy remapSourcesJar
+			}
+		}
+	}
+
+	repositories {}
+}

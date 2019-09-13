@@ -18,7 +18,6 @@ public class TesseractDimension extends OverworldDimension {
 
     public BlockPos entryPoint;
 
-
     TesseractDimension(World w, DimensionType t, DimensionSettings s){
         super(w, t);
         this.type = t;
