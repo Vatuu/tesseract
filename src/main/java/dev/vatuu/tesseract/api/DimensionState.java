@@ -1,5 +1,8 @@
 package dev.vatuu.tesseract.api;
 
+/**
+ * Test Javadoc
+ */
 public enum DimensionState {
     SAVE(false, false, false),
     SAVE_UNLOAD(true, false, false),
