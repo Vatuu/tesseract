@@ -27,11 +27,11 @@ dependencies {
 }
 
 processResources {
-	inputs.property "version", project.version
+	inputs.property "version", version
 
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
-		expand "version": project.version
+		expand "version": version
 	}
 
 	from(sourceSets.main.resources.srcDirs) {
@@ -39,39 +39,35 @@ processResources {
 	}
 }
 
-tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier "sources"
+	classifier = "sources"
 	from sourceSets.main.allSource
 }
-task apiJar(type: Jar, dependsOn: classes){
-	classifier "api"
-	from(sourceSets.main.output){
-		include "dev/vatuu/tesseract/api/**"
-	}
-}
-task remapApiJar(type: RemapJarTask, dependsOn: apiJar){
-	input = apiJar.archivePath
-}
+
 jar {
 	from "LICENSE"
-	dependsOn apiJar
 }
 
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
-			artifact(remapJar) {
+		maven(MavenPublication) {
+			artifact("${buildDir.absolutePath}/libs/${archivesBaseName}-${version}.jar") {
+				classifier null
 				builtBy remapJar
 			}
+
+			artifact("${buildDir.absolutePath}/libs/${archivesBaseName}-${version}-dev.jar") {
+				classifier "dev"
+				builtBy remapJar
+			}
+
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
-			artifact(apiJar){
-				builtBy remapApiJar
-			}
 		}
 	}
-
-	repositories { mavenLocal() }
 }
