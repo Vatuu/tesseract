@@ -15,7 +15,6 @@ group = project.maven_group
 repositories {
 	mavenCentral()
 	maven { url "https://minecraft.curseforge.com/api/maven/" }
-	maven { url 'http://maven.sargunv.s3-website-us-west-2.amazonaws.com/' }
 }
 minecraft {}
 
@@ -42,18 +41,17 @@ processResources {
 
 tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = "sources"
+	classifier "sources"
 	from sourceSets.main.allSource
 }
 task apiJar(type: Jar, dependsOn: classes){
-	classifier = "api-dev"
+	classifier "api"
 	from(sourceSets.main.output){
 		include "dev/vatuu/tesseract/api/**"
 	}
 }
 task remapApiJar(type: RemapJarTask, dependsOn: apiJar){
 	input = apiJar.archivePath
-	output = file("build/libs/tesseract-" + version + "-api.jar")
 }
 jar {
 	from "LICENSE"
@@ -63,20 +61,17 @@ jar {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			artifact(remapJar.output) {
+			artifact(remapJar) {
 				builtBy remapJar
 			}
 			artifact(sourcesJar) {
 				builtBy remapSourcesJar
 			}
-			artifact(remapApiJar.output){
-				classifier = "api"
+			artifact(apiJar){
 				builtBy remapApiJar
 			}
 		}
 	}
 
-	repositories {
-		mavenLocal()
-	}
+	repositories { mavenLocal() }
 }
