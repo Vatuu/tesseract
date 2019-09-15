@@ -1,16 +1,16 @@
 package dev.vatuu.tesseract.api;
 
-import dev.vatuu.tesseract.impl.world.DimensionRegistryImpl;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.Dimension;
+import dev.vatuu.tesseract.impl.extensions.mixins.SimpleRegistryMixin;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
 
-import java.util.function.BiFunction;
+public class DimensionRegistry {
 
-public interface DimensionRegistry {
+    private DimensionRegistry() {
 
-    static DimensionRegistry getInstance() { return DimensionRegistryImpl.getInstance(); }
+    }
 
-    DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> create);
+    public static boolean unregister(DimensionType t){
+        return ((SimpleRegistryMixin) Registry.DIMENSION).getEntries().values().remove(t);
+    }
 }

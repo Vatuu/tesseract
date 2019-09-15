@@ -1,7 +1,7 @@
 package dev.vatuu.tesseract.impl.extensions.mixins;
 
+import dev.vatuu.tesseract.api.DimensionRegistry;
 import dev.vatuu.tesseract.api.DimensionState;
-import dev.vatuu.tesseract.impl.world.DimensionRegistryImpl;
 import dev.vatuu.tesseract.impl.world.TesseractDimension;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
@@ -111,6 +111,6 @@ public abstract class MinecraftServerMixin {
     }
 
     private void unregister(DimensionType type){
-        DimensionRegistryImpl.unregister(type);
+        DimensionRegistry.unregister(type);
     }
 }

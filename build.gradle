@@ -14,6 +14,7 @@ group = project.maven_group
 
 repositories {
 	mavenCentral()
+	maven { url = 'https://jitpack.io' }
 	maven { url "https://minecraft.curseforge.com/api/maven/" }
 }
 minecraft {}
@@ -24,6 +25,10 @@ dependencies {
 	modImplementation 	"net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation 	"net.fabricmc.fabric-api:fabric-events-lifecycle-v0:${project.cmd_version}"
 	modImplementation 	"net.fabricmc.fabric-api:fabric-api-base:${project.base_version}"
+	modApi ("com.github.Draylar:fabric:1.0.0") {
+		exclude module: "fabric-api-base"
+		exclude module: "fabric-events-lifecycle-v0"
+	}
 }
 
 processResources {
