@@ -26,11 +26,11 @@ dependencies {
 }
 
 processResources {
-	inputs.property "version", project.version
+	inputs.property "version", version
 
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
-		expand "version": project.version
+		expand "version": version
 	}
 
 	from(sourceSets.main.resources.srcDirs) {
@@ -52,6 +52,7 @@ task apiJar(type: Jar, dependsOn: classes){
 
 jar {
 	from "LICENSE"
+	dependsOn remapJar
 }
 
 publishing {
