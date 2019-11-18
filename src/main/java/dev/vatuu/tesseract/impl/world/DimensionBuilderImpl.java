@@ -41,12 +41,12 @@ public class DimensionBuilderImpl implements DimensionBuilder {
     }
 
     public DimensionBuilderImpl renderFog(boolean shouldRenderFog){
-        dim.shouldRenderFog = (i1, i2) -> shouldRenderFog;
+        dim.isFogThick = (i1, i2) -> shouldRenderFog;
         return this;
     }
 
     public DimensionBuilderImpl renderFog(RenderFogFunction bi){
-        dim.shouldRenderFog = bi;
+        dim.isFogThick = bi;
         return this;
     }
 

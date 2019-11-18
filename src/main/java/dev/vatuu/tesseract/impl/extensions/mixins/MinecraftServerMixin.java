@@ -103,7 +103,7 @@ public abstract class MinecraftServerMixin {
     private void resetWorld(ServerWorld w){
         w.savingDisabled = true;
         try{
-            File f = w.dimension.getType().getFile(w.getSaveHandler().getWorldDir());
+            File f = w.dimension.getType().getSaveDirectory(w.getSaveHandler().getWorldDir());
             FileUtils.deleteDirectory(f);
         }catch(IOException e){
             e.printStackTrace();
