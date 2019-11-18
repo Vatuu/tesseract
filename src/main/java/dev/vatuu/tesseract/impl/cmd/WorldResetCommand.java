@@ -32,13 +32,15 @@ public class WorldResetCommand {
                     ));
     }
 
-    private static int activate(CommandContext<ServerCommandSource> src, DimensionType t, boolean unregister) throws CommandSyntaxException{
-        if(!(t instanceof TesseractDimensionType)){
-            throw INVALID_DIMENSION.create(Registry.DIMENSION.getId(t));
+    private static int activate(CommandContext<ServerCommandSource> context, DimensionType type, boolean unregister) throws CommandSyntaxException{
+        if(!(type instanceof TesseractDimensionType)){
+            throw INVALID_DIMENSION.create(Registry.DIMENSION.getId(type));
         }
-        ServerWorld w = src.getSource().getPlayer().getServer().getWorld(t);
-        ((TesseractDimension)w.getServer().getWorld(t).getDimension()).setSaveState(DimensionState.getByValues(true, true, unregister));
-        w.getServer().save(true, true, false);
+
+        ServerWorld playerWorld = context.getSource().getPlayer().getServer().getWorld(type);
+        ((TesseractDimension) playerWorld.getServer().getWorld(type).getDimension()).setSaveState(DimensionState.getByValues(true, true, unregister));
+        playerWorld.getServer().save(true, true, false);
+
         return 1;
     }
 

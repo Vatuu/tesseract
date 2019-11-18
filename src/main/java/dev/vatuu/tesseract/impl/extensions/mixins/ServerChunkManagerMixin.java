@@ -16,7 +16,7 @@ public abstract class ServerChunkManagerMixin {
     @Shadow @Final private ServerWorld world;
 
     @Inject(method = "save(Z)V", at = @At("HEAD"), cancellable = true)
-    private void save(boolean boolean_1, CallbackInfo ci){
+    private void save(boolean flush, CallbackInfo ci){
         if(world.dimension instanceof TesseractDimension){
             if(((TesseractDimension)world.dimension).getSaveState().shouldReset())
                 ci.cancel();

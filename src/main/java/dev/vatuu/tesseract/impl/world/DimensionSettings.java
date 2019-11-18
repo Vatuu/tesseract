@@ -1,11 +1,10 @@
 package dev.vatuu.tesseract.impl.world;
 
-import dev.vatuu.tesseract.api.DimensionRegistry;
-import dev.vatuu.tesseract.impl.Tesseract;
 import dev.vatuu.tesseract.api.extensions.FogColourFunction;
 import dev.vatuu.tesseract.api.extensions.RenderFogFunction;
-import dev.vatuu.tesseract.api.extensions.SpawnTopFunction;
 import dev.vatuu.tesseract.api.extensions.SpawnChunkPosFunction;
+import dev.vatuu.tesseract.api.extensions.SpawnTopFunction;
+import dev.vatuu.tesseract.impl.Tesseract;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,24 +19,24 @@ import java.util.function.Function;
 final class DimensionSettings {
 
     boolean shouldBedsExplode = false;
-    boolean shouldRenderSkybox = false;
+    boolean hasVisibleSky = false;
     boolean vaporizeWater = false;
     float cloudHeight = 128.0f;
-    RenderFogFunction isFogThick = (i1, i2) -> false;
-    FogColourFunction fogColour = (f1, f2) -> Tesseract.getRgbColour(0, 0, 0);
-    SpawnChunkPosFunction spawningBlockChunk = (pos, b) -> null;
-    SpawnTopFunction topSpawningBlockPos = (i1, i2, b) -> null;
+    RenderFogFunction isFogThick = (x, z) -> false;
+    FogColourFunction fogColour = (skyAngle, tickDelta) -> Tesseract.getRgbColour(0, 0, 0);
+    SpawnChunkPosFunction spawningBlockChunk = (pos, checkMobSpawnValidity) -> null;
+    SpawnTopFunction topSpawningBlockPos = (x, z, checkMobSpawnValidity) -> null;
     WorldBorder border = new WorldBorder();
     BlockPos forcedSpawn = null;
     Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> chunkGenerator = DEFAULT_VOID_WORLD;
 
-    private static Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> DEFAULT_VOID_WORLD = (w) -> {
+    private static Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> DEFAULT_VOID_WORLD = (world) -> {
         FlatChunkGeneratorConfig config = ChunkGeneratorType.FLAT.createSettings();
         config.getLayers().add(new FlatChunkGeneratorLayer(1, Blocks.AIR));
         config.setBiome(Biomes.THE_VOID);
         config.updateLayerBlocks();
-        FixedBiomeSourceConfig biomeConfig = BiomeSourceType.FIXED.getConfig(w.getLevelProperties()).setBiome(Biomes.THE_VOID);
+        FixedBiomeSourceConfig biomeConfig = BiomeSourceType.FIXED.getConfig(world.getLevelProperties()).setBiome(Biomes.THE_VOID);
 
-        return ChunkGeneratorType.FLAT.create(w, BiomeSourceType.FIXED.applyConfig(biomeConfig), config);
+        return ChunkGeneratorType.FLAT.create(world, BiomeSourceType.FIXED.applyConfig(biomeConfig), config);
     };
 }
