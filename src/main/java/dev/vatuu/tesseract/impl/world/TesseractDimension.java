@@ -38,7 +38,7 @@ public class TesseractDimension extends OverworldDimension {
     @Override public boolean hasVisibleSky() { return settings.shouldRenderSkybox; }
     @Override public Vec3d getFogColor(float f1, float f2) { return settings.fogColour.apply(f1, f2); }
     @Override public boolean canPlayersSleep() { return !settings.shouldBedsExplode; }
-    @Override public boolean shouldRenderFog(int i1, int i2) { return settings.shouldRenderFog.apply(i1, i2); }
+    @Override public boolean isFogThick(int i1, int i2) { return settings.isFogThick.apply(i1, i2); }
     @Override public DimensionType getType() { return type; }
 
     public DimensionState getSaveState() { return saveState; }

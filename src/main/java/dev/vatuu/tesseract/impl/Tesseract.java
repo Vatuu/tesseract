@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.biome.BiomeAccess;
+import net.minecraft.world.biome.HorizontalVoronoiBiomeAccessType;
 import net.minecraft.world.dimension.DimensionType;
 
 public class Tesseract implements ModInitializer {
@@ -23,7 +25,8 @@ public class Tesseract implements ModInitializer {
                     .forcedSpawnPoint(new BlockPos(0, 64, 0))
                     .renderSkybox(true)
                     .renderFog(false)
-                .build(w, t)
+                .build(w, t),
+                HorizontalVoronoiBiomeAccessType.INSTANCE
         );
 
         ServerStartCallback.EVENT.register((ci) -> {

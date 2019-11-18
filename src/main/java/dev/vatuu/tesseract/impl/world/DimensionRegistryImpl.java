@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeAccessType;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 
@@ -26,9 +27,9 @@ public class DimensionRegistryImpl implements DimensionRegistry {
         else return INSTANCE;
     }
 
-    public DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> create){
+    public DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> create, BiomeAccessType biomeAccessor){
         int id = registered.size() + 3;
-        TesseractDimensionType t = new TesseractDimensionType(id, name.getPath(), hasSkyLight, create);
+        TesseractDimensionType t = new TesseractDimensionType(id, name.getPath(), hasSkyLight, create, biomeAccessor);
         registered.put(id, t);
         return Registry.register(Registry.DIMENSION, id, name.toString(), t);
     }

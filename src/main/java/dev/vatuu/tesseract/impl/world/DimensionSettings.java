@@ -23,7 +23,7 @@ final class DimensionSettings {
     boolean shouldRenderSkybox = false;
     boolean vaporizeWater = false;
     float cloudHeight = 128.0f;
-    RenderFogFunction shouldRenderFog = (i1, i2) -> false;
+    RenderFogFunction isFogThick = (i1, i2) -> false;
     FogColourFunction fogColour = (f1, f2) -> Tesseract.getRgbColour(0, 0, 0);
     SpawnChunkPosFunction spawningBlockChunk = (pos, b) -> null;
     SpawnTopFunction topSpawningBlockPos = (i1, i2, b) -> null;
@@ -36,7 +36,7 @@ final class DimensionSettings {
         config.getLayers().add(new FlatChunkGeneratorLayer(1, Blocks.AIR));
         config.setBiome(Biomes.THE_VOID);
         config.updateLayerBlocks();
-        FixedBiomeSourceConfig biomeConfig = BiomeSourceType.FIXED.getConfig().setBiome(Biomes.THE_VOID);
+        FixedBiomeSourceConfig biomeConfig = BiomeSourceType.FIXED.getConfig(w.getLevelProperties()).setBiome(Biomes.THE_VOID);
 
         return ChunkGeneratorType.FLAT.create(w, BiomeSourceType.FIXED.applyConfig(biomeConfig), config);
     };
