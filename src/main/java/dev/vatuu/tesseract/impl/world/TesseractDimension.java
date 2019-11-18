@@ -18,10 +18,10 @@ public class TesseractDimension extends OverworldDimension {
 
     public BlockPos entryPoint;
 
-    TesseractDimension(World w, DimensionType t, DimensionSettings s){
-        super(w, t);
-        this.type = t;
-        this.settings = s;
+    TesseractDimension(World world, DimensionType type, DimensionSettings settings){
+        super(world, type);
+        this.type = type;
+        this.settings = settings;
         this.saveState = DimensionState.SAVE;
         this.entryPoint = new BlockPos(0, 64, 0);
     }
@@ -33,12 +33,12 @@ public class TesseractDimension extends OverworldDimension {
     @Override public boolean isNether() { return false; }
     @Override public WorldBorder createWorldBorder() { return settings.border; }
     @Override public ChunkGenerator<? extends ChunkGeneratorConfig> createChunkGenerator() { return settings.chunkGenerator.apply(this.world); }
-    @Override public BlockPos getSpawningBlockInChunk(ChunkPos pos, boolean b) { return settings.spawningBlockChunk.apply(pos, b); }
-    @Override public BlockPos getTopSpawningBlockPosition(int i1, int i2, boolean b) { return settings.topSpawningBlockPos.apply(i1, i2, b); }
-    @Override public boolean hasVisibleSky() { return settings.shouldRenderSkybox; }
-    @Override public Vec3d getFogColor(float f1, float f2) { return settings.fogColour.apply(f1, f2); }
+    @Override public BlockPos getSpawningBlockInChunk(ChunkPos pos, boolean checkMobSpawnValidity) { return settings.spawningBlockChunk.apply(pos, checkMobSpawnValidity); }
+    @Override public BlockPos getTopSpawningBlockPosition(int x, int z, boolean checkMobSpawnValidity) { return settings.topSpawningBlockPos.apply(x, z, checkMobSpawnValidity); }
+    @Override public boolean hasVisibleSky() { return settings.hasVisibleSky; }
+    @Override public Vec3d getFogColor(float skyAngle, float tickDelta) { return settings.fogColour.apply(skyAngle, tickDelta); }
     @Override public boolean canPlayersSleep() { return !settings.shouldBedsExplode; }
-    @Override public boolean isFogThick(int i1, int i2) { return settings.isFogThick.apply(i1, i2); }
+    @Override public boolean isFogThick(int x, int iz) { return settings.isFogThick.apply(x, iz); }
     @Override public DimensionType getType() { return type; }
 
     public DimensionState getSaveState() { return saveState; }

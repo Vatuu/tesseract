@@ -9,7 +9,7 @@ import net.minecraft.world.dimension.DimensionType;
 import java.util.function.BiFunction;
 
 public class TesseractDimensionType extends DimensionType {
-    TesseractDimensionType(int id, String name, boolean hasSky, BiFunction<World, DimensionType, ? extends Dimension> create, BiomeAccessType biomeAccessor) {
-        super(id, name.toUpperCase(), name.toLowerCase(), create, hasSky, biomeAccessor);
+    TesseractDimensionType(int dimensionId, String name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> factory, BiomeAccessType biomeAccessor) {
+        super(dimensionId, name.toUpperCase(), name.toLowerCase(), factory, hasSkyLight, biomeAccessor);
     }
 }

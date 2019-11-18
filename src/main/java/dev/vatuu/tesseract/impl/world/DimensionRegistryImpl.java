@@ -27,14 +27,14 @@ public class DimensionRegistryImpl implements DimensionRegistry {
         else return INSTANCE;
     }
 
-    public DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> create, BiomeAccessType biomeAccessor){
+    public DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> factory, BiomeAccessType biomeAccessor){
         int id = registered.size() + 3;
-        TesseractDimensionType t = new TesseractDimensionType(id, name.getPath(), hasSkyLight, create, biomeAccessor);
+        TesseractDimensionType t = new TesseractDimensionType(id, name.getPath(), hasSkyLight, factory, biomeAccessor);
         registered.put(id, t);
         return Registry.register(Registry.DIMENSION, id, name.toString(), t);
     }
 
-    public static boolean unregister(DimensionType t){
-        return ((SimpleRegistryMixin)Registry.DIMENSION).getEntries().values().remove(t);
+    public static boolean unregister(DimensionType type){
+        return ((SimpleRegistryMixin)Registry.DIMENSION).getEntries().values().remove(type);
     }
 }

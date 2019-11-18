@@ -1,8 +1,5 @@
 package dev.vatuu.tesseract.api;
 
-/**
- * Test Javadoc
- */
 public enum DimensionState {
     SAVE(false, false, false),
     SAVE_UNLOAD(true, false, false),
@@ -32,13 +29,13 @@ public enum DimensionState {
         return unregister;
     }
 
-    public static DimensionState getByValues(boolean unload, boolean reset, boolean unregister){
-        if(reset){
-            if(unregister) return RESET_UNREGISTER;
+    public static DimensionState getByValues(boolean unload, boolean reset, boolean unregister) {
+        if (reset) {
+            if (unregister) return RESET_UNREGISTER;
             else return RESET;
-        }else{
-            if(unregister) return SAVE_UNREGISTER;
-            if(unload) return SAVE_UNLOAD;
+        } else {
+            if (unregister) return SAVE_UNREGISTER;
+            if (unload) return SAVE_UNLOAD;
         }
         return SAVE;
     }

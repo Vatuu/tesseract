@@ -21,7 +21,7 @@ public interface DimensionBuilder {
 
     DimensionBuilder bedsExplode(boolean shouldExplode);
 
-    DimensionBuilder renderSkybox(boolean shouldRenderSkybox);
+    DimensionBuilder visibleSky(boolean hasVisibleSky);
 
     DimensionBuilder vaporizeWater(boolean vaporizeWater);
 

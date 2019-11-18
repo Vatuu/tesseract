@@ -25,8 +25,8 @@ public class DimensionBuilderImpl implements DimensionBuilder {
         return this;
     }
 
-    public DimensionBuilderImpl renderSkybox(boolean shouldRenderSkybox){
-        dim.shouldRenderSkybox = shouldRenderSkybox;
+    public DimensionBuilderImpl visibleSky(boolean hasVisibleSky){
+        dim.hasVisibleSky = hasVisibleSky;
         return this;
     }
 
