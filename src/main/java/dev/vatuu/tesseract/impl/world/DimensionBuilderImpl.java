@@ -75,6 +75,11 @@ public class DimensionBuilderImpl implements DimensionBuilder {
         return this;
      }
 
+     public DimensionBuilderImpl beesExplode(boolean b){
+        dim.beesExplode = b;
+        return this;
+     }
+
      public DimensionBuilderImpl forcedSpawnPoint(BlockPos pos){
         dim.forcedSpawn = pos;
         return this;

@@ -62,17 +62,17 @@ public abstract class MinecraftServerMixin {
         }
     }
 
-    private static final ThreadLocal<Iterator<ServerWorld>> apcraftvolvic = new ThreadLocal<>();
+    private static final ThreadLocal<Iterator<ServerWorld>> worldIteratorThreadSafe = new ThreadLocal<>();
 
     @Inject(method = "save(ZZZ)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;save(Lnet/minecraft/util/ProgressListener;ZZ)V"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void save(boolean suppressLog, boolean flushToDisk, boolean b3, CallbackInfoReturnable<Boolean> cir, boolean b4, Iterator<ServerWorld> iterator){
-        apcraftvolvic.set(iterator);
+        worldIteratorThreadSafe.set(iterator);
     }
 
     @Redirect(method = "save(ZZZ)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;save(Lnet/minecraft/util/ProgressListener;ZZ)V"))
     private void save(ServerWorld world, ProgressListener listener, boolean b1, boolean b2) throws SessionLockException {
-        Iterator<ServerWorld> it = apcraftvolvic.get();
-
+        Iterator<ServerWorld> it = worldIteratorThreadSafe.get();
+        worldIteratorThreadSafe.remove();
         if (world.getDimension() instanceof TesseractDimension && it != null) {
             DimensionState state = ((TesseractDimension) world.getDimension()).getSaveState();
 

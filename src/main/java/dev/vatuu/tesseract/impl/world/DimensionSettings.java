@@ -21,6 +21,7 @@ final class DimensionSettings {
     boolean shouldBedsExplode = false;
     boolean hasVisibleSky = false;
     boolean vaporizeWater = false;
+    boolean beesExplode = false;
     float cloudHeight = 128.0f;
     RenderFogFunction isFogThick = (x, z) -> false;
     FogColourFunction fogColour = (skyAngle, tickDelta) -> Tesseract.getRgbColour(0, 0, 0);
