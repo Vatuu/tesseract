@@ -43,4 +43,6 @@ public class TesseractDimension extends OverworldDimension {
 
     public DimensionState getSaveState() { return saveState; }
     public void setSaveState(DimensionState state) { saveState = state; }
+
+    public DimensionSettings getSettings() { return settings; }
 }

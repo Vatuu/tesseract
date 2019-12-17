@@ -3,7 +3,7 @@ package dev.vatuu.tesseract.api;
 import dev.vatuu.tesseract.impl.world.DimensionRegistryImpl;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeAccessType;
+import net.minecraft.world.biome.source.BiomeAccessType;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 

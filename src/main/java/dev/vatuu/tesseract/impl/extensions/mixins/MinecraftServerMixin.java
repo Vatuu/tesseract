@@ -3,6 +3,7 @@ package dev.vatuu.tesseract.impl.extensions.mixins;
 import dev.vatuu.tesseract.api.DimensionState;
 import dev.vatuu.tesseract.impl.world.DimensionRegistryImpl;
 import dev.vatuu.tesseract.impl.world.TesseractDimension;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.WorldGenerationProgressListener;
 import net.minecraft.server.world.SecondaryServerWorld;

@@ -16,7 +16,7 @@ import net.minecraft.world.gen.chunk.*;
 
 import java.util.function.Function;
 
-final class DimensionSettings {
+public final class DimensionSettings {
 
     boolean shouldBedsExplode = false;
     boolean hasVisibleSky = false;
@@ -40,4 +40,8 @@ final class DimensionSettings {
 
         return ChunkGeneratorType.FLAT.create(world, BiomeSourceType.FIXED.applyConfig(biomeConfig), config);
     };
+
+    public boolean isBeesExplode(){
+        return beesExplode;
+    }
 }

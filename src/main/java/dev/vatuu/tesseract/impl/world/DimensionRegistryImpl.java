@@ -3,10 +3,11 @@ package dev.vatuu.tesseract.impl.world;
 import dev.vatuu.tesseract.api.DimensionRegistry;
 import dev.vatuu.tesseract.impl.extensions.mixins.SimpleRegistryMixin;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import net.fabricmc.fabric.api.dimension.v1.FabricDimensionType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeAccessType;
+import net.minecraft.world.biome.source.BiomeAccessType;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 
@@ -28,7 +29,7 @@ public class DimensionRegistryImpl implements DimensionRegistry {
     }
 
     public DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> factory, BiomeAccessType biomeAccessor){
-        int id = registered.size() + 3;
+        int id = 5 + registered.size();
         TesseractDimensionType t = new TesseractDimensionType(id, name.getPath(), hasSkyLight, factory, biomeAccessor);
         registered.put(id, t);
         return Registry.register(Registry.DIMENSION, id, name.toString(), t);

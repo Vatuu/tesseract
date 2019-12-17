@@ -1,5 +1,6 @@
 package dev.vatuu.tesseract.impl;
 
+import dev.vatuu.tesseract.impl.cmd.ChangeDimensionCommand;
 import dev.vatuu.tesseract.impl.cmd.RegisterTestCommand;
 import dev.vatuu.tesseract.impl.cmd.WorldResetCommand;
 import net.fabricmc.api.ModInitializer;
@@ -13,6 +14,7 @@ public class Tesseract implements ModInitializer {
     @Override
     public void onInitialize() {
         ServerStartCallback.EVENT.register((ci) -> {
+            ChangeDimensionCommand.register(ci.getCommandManager().getDispatcher());
             RegisterTestCommand.register(ci.getCommandManager().getDispatcher());
             WorldResetCommand.register(ci.getCommandManager().getDispatcher());
         });

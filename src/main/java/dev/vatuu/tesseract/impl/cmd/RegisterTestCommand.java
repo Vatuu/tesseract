@@ -11,7 +11,8 @@ import dev.vatuu.tesseract.impl.world.DimensionBuilderImpl;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.HorizontalVoronoiBiomeAccessType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.source.HorizontalVoronoiBiomeAccessType;
 import net.minecraft.world.dimension.DimensionType;
 
 public class RegisterTestCommand {
@@ -31,8 +32,10 @@ public class RegisterTestCommand {
 
     private static int activate(CommandContext<ServerCommandSource> src, String id, boolean save) throws CommandSyntaxException {
         DimensionType dim = DimensionRegistry.getInstance().registerDimensionType(new Identifier(Tesseract.MOD_ID, id), true, (w, d) -> new DimensionBuilderImpl()
-        .bedsExplode(true)
-        .vaporizeWater(true)
+                .bedsExplode(true)
+                .vaporizeWater(true)
+                .beesExplode(true)
+                .forcedSpawnPoint(new BlockPos(0, 64, 0))
         .build(w, d), HorizontalVoronoiBiomeAccessType.INSTANCE);
         return 1;
     }
