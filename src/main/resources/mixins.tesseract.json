@@ -5,6 +5,9 @@
   "injectors": { "defaultRequire": 1 },
 
   "mixins": [
+    "EndPortalBlockEntityRendererAccessor",
+    "PlayerEntityModelAccessor",
+    "PlayerEntityRendererMixin",
     "MinecraftServerMixin",
     "SimpleRegistryMixin",
     "ServerChunkManagerMixin",

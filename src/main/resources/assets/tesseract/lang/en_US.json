@@ -1,0 +1,9 @@
+{
+    "block.tesseract.lil_tesseract": "'lil Tesseract",
+    "gui.tesseract.lil_tesseract.title": "'lil Tesseract Configuration",
+    "gui.tesseract.lil_tesseract.x": "X Axis",
+    "gui.tesseract.lil_tesseract.y": "Y Axis",
+    "gui.tesseract.lil_tesseract.z": "Z Axis",
+    "gui.tesseract.lil_tesseract.w": "W Axis",
+    "gui.tesseract.lil_tesseract.wireframe": "Wireframe Mode"
+}

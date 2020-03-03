@@ -22,7 +22,7 @@
     "main": [ "dev.vatuu.tesseract.impl.Tesseract" ]
   },
   "mixins": [
-    "tesseract.mixins.json"
+    "mixins.tesseract.json"
   ],
 
   "depends": {

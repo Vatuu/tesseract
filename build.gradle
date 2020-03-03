@@ -21,10 +21,6 @@ dependencies {
 	mappings			"net.fabricmc:yarn:${project.minecraft_version}+build.${project.yarn_build}:v2"
 	modImplementation	"net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation 	"net.fabricmc.fabric-api:fabric-api:${project.api_version}"
-	//modImplementation 	"net.fabricmc.fabric-api:fabric-api-base:${project.base_version}"
-	//modImplementation	"net.fabricmc.fabric-api:fabric-events-lifecycle-v0:${project.event_version}"
-	//modImplementation 	"net.fabricmc.fabric-api:fabric-commands-v0:${project.cmd_version}"
-	//modImplementation 	"net.fabricmc.fabric-api:fabric-dimensions-v1:${project.dim_version}"
 }
 
 processResources {

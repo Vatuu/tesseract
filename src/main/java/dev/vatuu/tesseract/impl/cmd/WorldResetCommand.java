@@ -34,7 +34,7 @@ public class WorldResetCommand {
 
     private static int activate(CommandContext<ServerCommandSource> context, DimensionType type, boolean unregister) throws CommandSyntaxException{
         if(!(type instanceof TesseractDimensionType)){
-            throw INVALID_DIMENSION.create(Registry.DIMENSION.getId(type));
+            throw INVALID_DIMENSION.create(Registry.DIMENSION_TYPE.getId(type));
         }
 
         ServerWorld playerWorld = context.getSource().getPlayer().getServer().getWorld(type);

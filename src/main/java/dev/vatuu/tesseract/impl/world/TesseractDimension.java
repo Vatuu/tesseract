@@ -36,7 +36,7 @@ public class TesseractDimension extends OverworldDimension {
     @Override public BlockPos getSpawningBlockInChunk(ChunkPos pos, boolean checkMobSpawnValidity) { return settings.spawningBlockChunk.apply(pos, checkMobSpawnValidity); }
     @Override public BlockPos getTopSpawningBlockPosition(int x, int z, boolean checkMobSpawnValidity) { return settings.topSpawningBlockPos.apply(x, z, checkMobSpawnValidity); }
     @Override public boolean hasVisibleSky() { return settings.hasVisibleSky; }
-    @Override public Vec3d getFogColor(float skyAngle, float tickDelta) { return settings.fogColour.apply(skyAngle, tickDelta); }
+    @Override public Vec3d modifyFogColor(Vec3d pos,  float tickDelta) { return settings.fogColour.apply(pos, tickDelta); }
     @Override public boolean canPlayersSleep() { return !settings.shouldBedsExplode; }
     @Override public boolean isFogThick(int x, int iz) { return settings.isFogThick.apply(x, iz); }
     @Override public DimensionType getType() { return type; }

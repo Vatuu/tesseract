@@ -20,6 +20,7 @@ public abstract class BeeEntityMixin extends AnimalEntity {
         super(type, world);
     }
 
+    //BeeGoBoom
     @Inject(method = "damage", at = @At(value = "RETURN"))
     public void damage(DamageSource src, float amount, CallbackInfoReturnable info){
         if(amount > 0 && src instanceof EntityDamageSource)

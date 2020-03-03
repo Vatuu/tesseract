@@ -32,10 +32,10 @@ public class DimensionRegistryImpl implements DimensionRegistry {
         int id = 5 + registered.size();
         TesseractDimensionType t = new TesseractDimensionType(id, name.getPath(), hasSkyLight, factory, biomeAccessor);
         registered.put(id, t);
-        return Registry.register(Registry.DIMENSION, id, name.toString(), t);
+        return Registry.register(Registry.DIMENSION_TYPE, id, name.toString(), t);
     }
 
     public static boolean unregister(DimensionType type){
-        return ((SimpleRegistryMixin)Registry.DIMENSION).getEntries().values().remove(type);
+        return ((SimpleRegistryMixin)Registry.DIMENSION_TYPE).getEntries().values().remove(type);
     }
 }
