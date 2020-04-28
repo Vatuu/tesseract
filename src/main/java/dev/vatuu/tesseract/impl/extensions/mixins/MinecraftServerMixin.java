@@ -9,6 +9,7 @@ import net.minecraft.server.world.SecondaryServerWorld;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ProgressListener;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.profiler.DisableableProfiler;
 import net.minecraft.world.SessionLockException;
 import net.minecraft.world.WorldSaveHandler;
 import net.minecraft.world.dimension.DimensionType;
@@ -34,6 +35,7 @@ public abstract class MinecraftServerMixin {
 
     @Shadow @Final private Map<DimensionType, ServerWorld> worlds;
 
+    @Shadow @Final private DisableableProfiler profiler;
     @Mutable private WorldSaveHandler saveHandler;
     @Mutable private WorldGenerationProgressListener generationProgress;
 
@@ -53,7 +55,7 @@ public abstract class MinecraftServerMixin {
             ServerWorld overworld = worlds.get(DimensionType.OVERWORLD);
             Validate.notNull(overworld, "Overworld not loaded!");
 
-            ServerWorld world = new SecondaryServerWorld(overworld, (MinecraftServer) (Object) this, ((MinecraftServer) (Object) this).getWorkerExecutor(), this.saveHandler, dimensionType, generationProgress);
+            ServerWorld world = new SecondaryServerWorld(overworld, (MinecraftServer) (Object) this, ((MinecraftServer) (Object) this).getWorkerExecutor(), this.saveHandler, dimensionType, this.profiler, generationProgress);
             worlds.put(dimensionType, world);
 
             cir.setReturnValue(world);
@@ -121,6 +123,6 @@ public abstract class MinecraftServerMixin {
 
     @Unique
     private void unregister(DimensionType type){
-        DimensionRegistryImpl.unregister(type);
+        DimensionRegistryImpl.getInstance().unregister(type);
     }
 }

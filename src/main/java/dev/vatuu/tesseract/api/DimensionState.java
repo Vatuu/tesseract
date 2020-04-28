@@ -7,9 +7,9 @@ public enum DimensionState {
     RESET(true, true, false),
     RESET_UNREGISTER(true, true, true);
 
-    private boolean unload;
-    private boolean reset;
-    private boolean unregister;
+    private final boolean unload;
+    private final boolean reset;
+    private final boolean unregister;
 
     DimensionState(boolean unload, boolean reset, boolean unregister){
         this.unload = unload;

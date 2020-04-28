@@ -22,7 +22,7 @@ public abstract class BeeEntityMixin extends AnimalEntity {
 
     //BeeGoBoom
     @Inject(method = "damage", at = @At(value = "RETURN"))
-    public void damage(DamageSource src, float amount, CallbackInfoReturnable info){
+    public void damage(DamageSource src, float amount, CallbackInfoReturnable<Boolean> info){
         if(amount > 0 && src instanceof EntityDamageSource)
             if(((TesseractDimension)this.getEntityWorld().dimension).getSettings().isBeesExplode())
                 this.kill();

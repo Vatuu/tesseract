@@ -33,6 +33,6 @@ public class ChangeDimensionCommand {
         PlayerEntity entity = context.getSource().getPlayer();
         FabricDimensions.teleport(entity, type, (e, w, dir, pitch, yaw) -> new BlockPattern.TeleportTarget(new Vec3d(pos).add(0.5d, 0d, 0.5d), Vec3d.ZERO, (int)yaw));
         entity.teleport(pos.getX(), pos.getY(), pos.getZ());
-        return 0;
+        return 1;
     }
 }

@@ -13,5 +13,12 @@ public interface DimensionRegistry {
 
     static DimensionRegistry getInstance() { return DimensionRegistryImpl.getInstance(); }
 
-    DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> create, BiomeAccessType biomeAccessor);
+    DimensionType registerDimensionType(Identifier name, DimensionFactory factory, BiomeAccessType biomeAccessor);
+    DimensionType registerDimensionType(Identifier name, boolean hasSkyLight, DimensionFactory factory, BiomeAccessType biomeAccessor);
+
+    DimensionType getDimensionType(Identifier id);
+    Identifier getDimensionName(DimensionType type);
+
+    boolean unregister(DimensionType type);
+    boolean unregister(Identifier id);
 }

@@ -23,15 +23,15 @@ public final class DimensionSettings {
     boolean vaporizeWater = false;
     boolean beesExplode = false;
     float cloudHeight = 128.0f;
-    RenderFogFunction isFogThick = (x, z) -> false;
-    FogColourFunction fogColour = (skyAngle, tickDelta) -> Tesseract.getRgbColour(0, 0, 0);
-    SpawnChunkPosFunction spawningBlockChunk = (pos, checkMobSpawnValidity) -> null;
-    SpawnTopFunction topSpawningBlockPos = (x, z, checkMobSpawnValidity) -> null;
     WorldBorder border = new WorldBorder();
     BlockPos forcedSpawn = null;
+    RenderFogFunction isFogThick = (skyAngle, tickDelta) -> false;
+    FogColourFunction fogColour = (position, tickDelta) -> Tesseract.getRgbColour(0, 0, 0);
+    SpawnChunkPosFunction spawningBlockChunk = (pos, checkMobSpawnValidity) -> null;
+    SpawnTopFunction topSpawningBlockPos = (x, z, checkMobSpawnValidity) -> null;
     Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> chunkGenerator = DEFAULT_VOID_WORLD;
 
-    private static Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> DEFAULT_VOID_WORLD = (world) -> {
+    private static final Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> DEFAULT_VOID_WORLD = (world) -> {
         FlatChunkGeneratorConfig config = ChunkGeneratorType.FLAT.createSettings();
         config.getLayers().add(new FlatChunkGeneratorLayer(1, Blocks.AIR));
         config.setBiome(Biomes.THE_VOID);

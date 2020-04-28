@@ -1,6 +1,6 @@
 package dev.vatuu.tesseract.impl.world;
 
-import dev.vatuu.tesseract.api.DimensionBuilder;
+import dev.vatuu.tesseract.api.DimensionFactory;
 import dev.vatuu.tesseract.impl.Tesseract;
 import dev.vatuu.tesseract.api.extensions.FogColourFunction;
 import dev.vatuu.tesseract.api.extensions.RenderFogFunction;
@@ -16,76 +16,81 @@ import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
 
 import java.util.function.Function;
 
-public class DimensionBuilderImpl implements DimensionBuilder {
+public class DimensionFactoryImpl implements DimensionFactory {
 
-    private DimensionSettings dim = new DimensionSettings();
+    private final DimensionSettings dim = new DimensionSettings();
 
-    public DimensionBuilderImpl bedsExplode(boolean shouldExplode){
+    public DimensionFactory bedsExplode(boolean shouldExplode){
         dim.shouldBedsExplode = shouldExplode;
         return this;
     }
 
-    public DimensionBuilderImpl visibleSky(boolean hasVisibleSky){
+    public DimensionFactory visibleSky(boolean hasVisibleSky){
         dim.hasVisibleSky = hasVisibleSky;
         return this;
     }
 
-    public DimensionBuilderImpl vaporizeWater(boolean vaporizeWater){
+    public DimensionFactory vaporizeWater(boolean vaporizeWater){
         dim.vaporizeWater = vaporizeWater;
         return this;
     }
 
-    public DimensionBuilderImpl cloudHeight(float cloudHeight){
+    public DimensionFactory cloudHeight(float cloudHeight){
         dim.cloudHeight = cloudHeight;
         return this;
     }
 
-    public DimensionBuilderImpl renderFog(boolean shouldRenderFog){
+    public DimensionFactory renderFog(boolean shouldRenderFog){
         dim.isFogThick = (i1, i2) -> shouldRenderFog;
         return this;
     }
 
-    public DimensionBuilderImpl renderFog(RenderFogFunction bi){
+    public DimensionFactory renderFog(RenderFogFunction bi){
         dim.isFogThick = bi;
         return this;
     }
 
-    public DimensionBuilderImpl fogColour(int red, int green, int blue){
+    public DimensionFactory fogColour(int red, int green, int blue){
         dim.fogColour = (f1, f2) -> Tesseract.getRgbColour(red, green, blue);
         return this;
     }
 
-    public DimensionBuilderImpl fogColour(FogColourFunction bi){
+    public DimensionFactory fogColour(FogColourFunction bi){
         dim.fogColour = bi;
         return this;
     }
 
-    public DimensionBuilderImpl spawningBlockChunk(SpawnChunkPosFunction bi){
+    public DimensionFactory spawningBlockChunk(SpawnChunkPosFunction bi){
         dim.spawningBlockChunk = bi;
         return this;
     }
 
-    public DimensionBuilderImpl topSpawningBlockPos(SpawnTopFunction tri){
+    public DimensionFactory topSpawningBlockPos(SpawnTopFunction tri){
         dim.topSpawningBlockPos = tri;
         return this;
     }
 
-     public DimensionBuilderImpl worldBorder(WorldBorder b){
+     public DimensionFactory worldBorder(WorldBorder b){
         dim.border = b;
         return this;
      }
 
-     public DimensionBuilderImpl beesExplode(boolean b){
+     public DimensionFactory beesExplode(boolean b){
         dim.beesExplode = b;
         return this;
      }
 
-     public DimensionBuilderImpl forcedSpawnPoint(BlockPos pos){
+     public DimensionFactory forcedSpawnPoint(BlockPos pos){
         dim.forcedSpawn = pos;
         return this;
      }
 
-    public DimensionBuilderImpl chunkGenerator(Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> generator){
+     public DimensionFactory forcedSpawnPoint(int x, int y, int z) {
+        dim.forcedSpawn = new BlockPos(x, y, z);
+        return this;
+     }
+
+    public DimensionFactory chunkGenerator(Function<World, ChunkGenerator<? extends ChunkGeneratorConfig>> generator){
         dim.chunkGenerator = generator;
         return this;
     }
