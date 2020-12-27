@@ -18,11 +18,15 @@
     "modmenu:api": true
   },
 
+  "accessWidener": "tesseract.widener",
+
   "entrypoints": {
-    "main": [ "dev.vatuu.tesseract.impl.Tesseract" ]
+    "main": [ "dev.vatuu.tesseract.Tesseract" ],
+    "client": [ "dev.vatuu.tesseract.client.TesseractClient" ]
   },
   "mixins": [
-    "mixins.tesseract.json"
+    "mixins.tesseract.json",
+    "mixins.client.tesseract.json"
   ],
 
   "depends": {

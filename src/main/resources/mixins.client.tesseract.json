@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "dev.vatuu.tesseract.client.extensions.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": { "defaultRequire": 1 },
+
+  "mixins": [
+    "ClientPlayNetworkHandlerMixin",
+    "ClientWorldMixin",
+    "PlayerEntityRendererMixin",
+    "WorldRendererMixin"
+  ]
+}
