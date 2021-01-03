@@ -1,5 +1,6 @@
 package dev.vatuu.tesseract.client.skybox;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.*;
@@ -9,29 +10,27 @@ import net.minecraft.client.world.ClientWorld;
 
 public abstract class SkyboxRenderer {
 
-    protected final MinecraftClient client;
-    protected final TextureManager textureManager;
+    protected static final VertexFormat skyVertexFormat = VertexFormats.POSITION;
 
-    protected final VertexFormat skyVertexFormat;
+    protected MinecraftClient client;
+    protected TextureManager textureManager;
 
     protected VertexBuffer starsBuffer, lightSkyBuffer, darkSkyBuffer;
 
     public SkyboxRenderer() {
-        this.client = MinecraftClient.getInstance();
-        this.textureManager = client.getTextureManager();
-
-        this.skyVertexFormat = VertexFormats.POSITION;
-
-        populateBuffers();
+        ClientLifecycleEvents.CLIENT_STARTED.register(t -> {
+            this.client = t;
+            this.textureManager = t.getTextureManager();
+            populateBuffers();
+        });
     }
 
     public abstract void renderSky(MatrixStack stack, ClientWorld world, Camera cam, float tickDelta);
 
-    public void renderStars(BufferBuilder builder) { }
+    public void renderStars(VertexConsumer builder) { }
 
-    public void renderSkyHalf(BufferBuilder builder, float y, boolean isBottom) { }
-
-
+    public void renderSkyHalf(VertexConsumer builder, float y, boolean isBottom) { }
+    
     private void populateBuffers() {
         // Stars
         Tessellator tessellator = Tessellator.getInstance();
@@ -40,6 +39,7 @@ public abstract class SkyboxRenderer {
             this.starsBuffer.close();
 
         this.starsBuffer = new VertexBuffer();
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, this.skyVertexFormat);
         this.renderStars(bufferBuilder);
         bufferBuilder.end();
         this.starsBuffer.upload(bufferBuilder);
@@ -51,6 +51,7 @@ public abstract class SkyboxRenderer {
             this.lightSkyBuffer.close();
 
         this.lightSkyBuffer = new VertexBuffer();
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, this.skyVertexFormat);
         this.renderSkyHalf(bufferBuilder, 16.0F, false);
         bufferBuilder.end();
         this.lightSkyBuffer.upload(bufferBuilder);
@@ -62,6 +63,7 @@ public abstract class SkyboxRenderer {
             this.darkSkyBuffer.close();
 
         this.darkSkyBuffer = new VertexBuffer();
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, this.skyVertexFormat);
         this.renderSkyHalf(bufferBuilder, -16.0F, true);
         bufferBuilder.end();
         this.darkSkyBuffer.upload(bufferBuilder);

@@ -1,5 +1,6 @@
 package dev.vatuu.tesseract.client.extensions.mixins;
 
+import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.client.SkyPropertiesRegistry;
 import dev.vatuu.tesseract.client.extensions.ClientWorldExtension;
 import dev.vatuu.tesseract.client.world.TesseractSkyProperties;
@@ -15,14 +16,14 @@ public abstract class ClientWorldMixin implements ClientWorldExtension {
 
     @Mutable @Shadow @Final private SkyProperties skyProperties;
 
-    @Unique
+    @Override
     public void setSkybox(Identifier id) {
-        if(id != null) {
+        if(id != null && !id.equals(Tesseract.id("none"))) {
             TesseractSkyProperties props = SkyPropertiesRegistry.REGISTRY.get(id);
             if(props != null)
                 this.skyProperties = props;
             else
-                this.skyProperties = TesseractSkyProperties.THE_END;
+                this.skyProperties = TesseractSkyProperties.MISSING;
         }
     }
 }

@@ -120,7 +120,7 @@ public class DimensionTypeBuilder {
         return DimensionType.method_32922(
                 fixedTime, skylight, ceiling, ultrawarm, natural,
                 coordinateScale, false, piglinSafe, !bedsExplode, respawnAnchorsExplode,
-                raids,  minY, height, logicalHeight, biomeAccessType, Tesseract.id("none"), DimensionType.OVERWORLD_ID, ambientLight);
+                raids,  minY, height, logicalHeight, biomeAccessType, Tesseract.id("none"), DimensionType.THE_END_ID, ambientLight);
     }
 
     public RegistryKey<DimensionType> register() throws TesseractRegistryException {

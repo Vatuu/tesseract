@@ -5,6 +5,9 @@
   "injectors": { "defaultRequire": 1 },
 
   "mixins": [
-    "GameJoinS2CPacketMixin"
+    "GameJoinS2CPacketMixin",
+    "PlayerRespawnS2CPacketMixin",
+    "PlayerManagerMixin",
+    "ServerPlayerEntityMixin"
   ]
 }

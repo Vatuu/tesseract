@@ -32,10 +32,10 @@ public class OverworldSkyboxRenderer extends SkyboxRenderer {
         RenderSystem.enableFog();
         RenderSystem.color3f(f, g, h);
         this.lightSkyBuffer.bind();
-        this.skyVertexFormat.startDrawing(0L);
+        skyVertexFormat.startDrawing(0L);
         this.lightSkyBuffer.draw(stack.peek().getModel());
         VertexBuffer.unbind();
-        this.skyVertexFormat.endDrawing();
+        skyVertexFormat.endDrawing();
         RenderSystem.disableFog();
         RenderSystem.disableAlphaTest();
         RenderSystem.enableBlend();
@@ -150,9 +150,8 @@ public class OverworldSkyboxRenderer extends SkyboxRenderer {
     }
 
     @Override
-    public void renderStars(BufferBuilder builder) {
+    public void renderStars(VertexConsumer builder) {
         Random random = new Random(10842L);
-        builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
 
         for(int i = 0; i < 1500; ++i) {
             double d = random.nextFloat() * 2.0F - 1.0F;
@@ -194,9 +193,7 @@ public class OverworldSkyboxRenderer extends SkyboxRenderer {
     }
 
     @Override
-    public void renderSkyHalf(BufferBuilder builder, float y, boolean isBottom) {
-        builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-
+    public void renderSkyHalf(VertexConsumer builder, float y, boolean isBottom) {
         for(int k = -384; k <= 384; k += 64) {
             for(int l = -384; l <= 384; l += 64) {
                 float f = (float)k;

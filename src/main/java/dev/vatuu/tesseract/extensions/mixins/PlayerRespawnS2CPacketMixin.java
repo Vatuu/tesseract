@@ -1,8 +1,9 @@
 package dev.vatuu.tesseract.extensions.mixins;
 
 import dev.vatuu.tesseract.extensions.SkyboxInjectExt;
+import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlayerRespawnS2CPacket;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -10,10 +11,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(GameJoinS2CPacket.class)
-public abstract class GameJoinS2CPacketMixin implements SkyboxInjectExt {
+@Mixin(PlayerRespawnS2CPacket.class)
+public abstract class PlayerRespawnS2CPacketMixin implements SkyboxInjectExt {
 
-    @Unique private Identifier skyboxIdentifier;
+
+    @Unique
+    private Identifier skyboxIdentifier;
 
     @Inject(method = "write", at = @At("RETURN"))
     private void write(PacketByteBuf buf, CallbackInfo info) {

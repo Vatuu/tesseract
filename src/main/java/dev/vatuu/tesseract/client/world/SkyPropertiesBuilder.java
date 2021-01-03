@@ -5,7 +5,6 @@ import dev.vatuu.tesseract.client.skybox.EndSkyboxRenderer;
 import dev.vatuu.tesseract.client.skybox.SkyboxRenderer;
 import dev.vatuu.tesseract.interfaces.FogColourFunction;
 import dev.vatuu.tesseract.interfaces.FogThiccFunction;
-import net.minecraft.client.render.SkyProperties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;

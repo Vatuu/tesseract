@@ -1,6 +1,7 @@
 package dev.vatuu.tesseract.registry;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.network.PacketS2CSyncDimensionTypes;
 import dev.vatuu.tesseract.world.DimensionState;
@@ -95,6 +96,11 @@ public class TesseractRegistry {
                 false);
         server.worlds.get(World.OVERWORLD).getWorldBorder().addListener(new WorldBorderListener.WorldBorderSyncer(world.getWorldBorder()));
         server.worlds.put(key, world);
+
+        PacketS2CSyncDimensionTypes packet = new PacketS2CSyncDimensionTypes(
+                this.server.getPlayerManager().registryManager,
+                Lists.newArrayList(this.server.getWorldRegistryKeys()));
+        PlayerLookup.all(this.server).forEach(p -> Tesseract.INSTANCE.getNetworkHandler().sendToClient(p, packet));
 
         return key;
     }
