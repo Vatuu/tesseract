@@ -11,3 +11,6 @@ accessible field net/minecraft/server/PlayerManager registryManager Lnet/minecra
 accessible field net/minecraft/client/network/ClientPlayNetworkHandler registryManager Lnet/minecraft/util/registry/DynamicRegistryManager;
 accessible field net/minecraft/client/network/ClientPlayNetworkHandler worldKeys Ljava/util/Set;
 accessible field net/minecraft/client/render/entity/model/PlayerEntityModel cloak Lnet/minecraft/client/model/ModelPart;
+
+# Common
+accessible field net/minecraft/util/registry/DefaultedRegistry defaultValue Ljava/lang/Object;

@@ -6,6 +6,7 @@ import dev.vatuu.tesseract.registry.TesseractRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
 public class Tesseract implements ModInitializer {
@@ -16,9 +17,6 @@ public class Tesseract implements ModInitializer {
 
     private NetworkHandler networkHandler;
 
-    //Disabled for now, it's just distracting
-    //private static final BlockEntityType<LilTesseractBlockEntity> LIL_TESSERACT_BE = LilTesseractBlockEntity.getBlockEntityType();
-
     public static Identifier id(String path) {
         return new Identifier(MOD_ID, path);
     }
@@ -27,13 +25,10 @@ public class Tesseract implements ModInitializer {
     public void onInitialize() {
         INSTANCE = this;
 
-        CommandRegistrationCallback.EVENT.register((dis, b) -> {
-            CreateTestWorldCommand.register(dis);
-        });
+        if(FabricLoader.getInstance().isDevelopmentEnvironment())
+            CommandRegistrationCallback.EVENT.register((dis, b) -> CreateTestWorldCommand.register(dis));
 
-        ServerLifecycleEvents.SERVER_STARTED.register(t -> {
-            TesseractRegistry.setInstance(t.getNetworkIo().getServer());
-        });
+        ServerLifecycleEvents.SERVER_STARTED.register(t -> TesseractRegistry.setInstance(t.getNetworkIo().getServer()));
 
         this.networkHandler = new NetworkHandler();
     }

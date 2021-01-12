@@ -22,8 +22,6 @@ import net.minecraft.world.gen.GeneratorOptions;
 import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
 import net.minecraft.world.level.UnmodifiableLevelProperties;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class TesseractRegistry {
@@ -36,14 +34,11 @@ public class TesseractRegistry {
 
     private final Registry<DimensionType> dimensionTypeRegistry;
 
-    private final Map<DimensionType, Identifier> skyProperties;
-
     private TesseractRegistry(MinecraftServer server) {
         this.server = server;
         this.registries = server.getRegistryManager();
         this.saveProperties = server.getSaveProperties();
-        this.dimensionTypeRegistry = registries.get(Registry.DIMENSION_TYPE_KEY);
-        this.skyProperties = new HashMap<>();
+        this.dimensionTypeRegistry = registries.get(Registry.DIMENSION_TYPE_KEY);;
     }
 
     public static TesseractRegistry getInstance() {
@@ -51,10 +46,6 @@ public class TesseractRegistry {
     }
 
     public RegistryKey<DimensionType> registerDimension(DimensionType type, Identifier id) throws TesseractRegistryException {
-        return registerDimension(type, id, Tesseract.id("none"));
-    }
-
-    public RegistryKey<DimensionType> registerDimension(DimensionType type, Identifier id, Identifier skyProperties) throws TesseractRegistryException {
         RegistryKey<DimensionType> key = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, id);
 
         if(dimensionTypeRegistry.containsId(id))
@@ -62,13 +53,7 @@ public class TesseractRegistry {
 
         Registry.register(dimensionTypeRegistry, id, type);
 
-        this.skyProperties.put(type, skyProperties);
-
         return key;
-    }
-
-    public Identifier getSkyProperties(DimensionType key) {
-        return skyProperties.get(key);
     }
 
     public RegistryKey<World> createWorld(RegistryKey<DimensionType> type, Identifier id, DimensionState state) throws TesseractRegistryException {

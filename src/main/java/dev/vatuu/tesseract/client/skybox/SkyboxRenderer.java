@@ -13,16 +13,12 @@ public abstract class SkyboxRenderer {
     protected static final VertexFormat skyVertexFormat = VertexFormats.POSITION;
 
     protected MinecraftClient client;
-    protected TextureManager textureManager;
 
     protected VertexBuffer starsBuffer, lightSkyBuffer, darkSkyBuffer;
 
     public SkyboxRenderer() {
-        ClientLifecycleEvents.CLIENT_STARTED.register(t -> {
-            this.client = t;
-            this.textureManager = t.getTextureManager();
-            populateBuffers();
-        });
+        this.client = MinecraftClient.getInstance();
+        populateBuffers();
     }
 
     public abstract void renderSky(MatrixStack stack, ClientWorld world, Camera cam, float tickDelta);
@@ -67,5 +63,9 @@ public abstract class SkyboxRenderer {
         this.renderSkyHalf(bufferBuilder, -16.0F, true);
         bufferBuilder.end();
         this.darkSkyBuffer.upload(bufferBuilder);
+    }
+
+    protected TextureManager getTextureManager() {
+        return this.client.getTextureManager();
     }
 }

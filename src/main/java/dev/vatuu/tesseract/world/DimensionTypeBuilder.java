@@ -13,6 +13,9 @@ import java.util.OptionalLong;
 
 public class DimensionTypeBuilder {
 
+    public static final Identifier SKYPROPERTIES_OVERWORLD = new Identifier("overworld");
+    public static final Identifier SKYPROPERTIES_END = new Identifier("the_end");
+
     private final Identifier name;
     private final BiomeAccessType biomeAccessType;
 
@@ -120,10 +123,10 @@ public class DimensionTypeBuilder {
         return DimensionType.method_32922(
                 fixedTime, skylight, ceiling, ultrawarm, natural,
                 coordinateScale, false, piglinSafe, !bedsExplode, respawnAnchorsExplode,
-                raids,  minY, height, logicalHeight, biomeAccessType, Tesseract.id("none"), DimensionType.THE_END_ID, ambientLight);
+                raids,  minY, height, logicalHeight, biomeAccessType, Tesseract.id("none"), skyPropertiesKey, ambientLight);
     }
 
     public RegistryKey<DimensionType> register() throws TesseractRegistryException {
-        return TesseractRegistry.getInstance().registerDimension(build(), name, skyPropertiesKey);
+        return TesseractRegistry.getInstance().registerDimension(build(), name);
     }
 }

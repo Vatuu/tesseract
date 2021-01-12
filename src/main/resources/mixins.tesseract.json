@@ -4,10 +4,5 @@
   "compatibilityLevel": "JAVA_8",
   "injectors": { "defaultRequire": 1 },
 
-  "mixins": [
-    "GameJoinS2CPacketMixin",
-    "PlayerRespawnS2CPacketMixin",
-    "PlayerManagerMixin",
-    "ServerPlayerEntityMixin"
-  ]
+  "mixins": []
 }

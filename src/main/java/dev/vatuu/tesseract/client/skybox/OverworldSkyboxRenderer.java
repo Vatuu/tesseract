@@ -84,7 +84,7 @@ public class OverworldSkyboxRenderer extends SkyboxRenderer {
         stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(w.getSkyAngle(delta) * 360.0F));
         Matrix4f matrix4f2 = stack.peek().getModel();
         s = 30.0F;
-        this.textureManager.bindTexture(SUN);
+        getTextureManager().bindTexture(SUN);
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         bufferBuilder.vertex(matrix4f2, -s, 100.0F, -s).texture(0.0F, 0.0F).next();
         bufferBuilder.vertex(matrix4f2, s, 100.0F, -s).texture(1.0F, 0.0F).next();
@@ -93,7 +93,7 @@ public class OverworldSkyboxRenderer extends SkyboxRenderer {
         bufferBuilder.end();
         BufferRenderer.draw(bufferBuilder);
         s = 20.0F;
-        this.textureManager.bindTexture(MOON_PHASES);
+        getTextureManager().bindTexture(MOON_PHASES);
         int t = w.getMoonPhase();
         int u = t % 4;
         int v = t / 4 % 2;
