@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ChunkGeneratorSettings.class)
-public class ChunkGeneratorSettingsInvoker {
+public interface ChunkGeneratorSettingsInvoker {
     @Invoker("<init>")
-    public static ChunkGeneratorSettings init(StructuresConfig structuresConfig, GenerationShapeConfig generationShapeConfig, BlockState defaultBlock, BlockState defaultFluid, int bedrockCeilingY, int bedrockFloorY, int seaLevel, boolean mobGenerationDisabled) {
-        throw null;
+    static ChunkGeneratorSettings init(StructuresConfig structuresConfig, GenerationShapeConfig generationShapeConfig, BlockState defaultBlock, BlockState defaultFluid, int bedrockCeilingY, int bedrockFloorY, int seaLevel, boolean mobGenerationDisabled) {
+        throw new RuntimeException("If this is thrown Mixin failed");
     }
 }

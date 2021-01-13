@@ -38,7 +38,7 @@ public abstract class ServerWorldMixin extends World implements ServerWorldExt {
 
     @Inject(method = "save", at = @At("HEAD"), cancellable = true)
     private void saveOverride(ProgressListener pogress, boolean flush, boolean bool, CallbackInfo info) {
-        if(saveState != null && saveState.shouldReset())
-            info.cancel();
+//        if(saveState != null && saveState.shouldReset())
+//            info.cancel();
     }
 }

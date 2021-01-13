@@ -30,7 +30,7 @@ public class RegenerateWorldCommand {
                     CreateTestWorldCommand.DIMENSION_WORLD.getValue(),
                     DimensionState.RESET);
 
-            ctx.getSource().getPlayer().teleport(ctx.getSource().getMinecraftServer().getWorld(CreateTestWorldCommand.DIMENSION_WORLD), 0, 64, 0, 0, 0);
+            ctx.getSource().getPlayer().teleport(ctx.getSource().getMinecraftServer().getWorld(CreateTestWorldCommand.DIMENSION_WORLD), 0, 128, 0, 0, 0);
         }catch(TesseractException e) {
             ctx.getSource().sendError(new LiteralText("Something went wrong! Check the console."));
             e.printStackTrace();

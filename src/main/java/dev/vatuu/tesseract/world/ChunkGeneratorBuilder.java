@@ -3,8 +3,8 @@ package dev.vatuu.tesseract.world;
 import com.mojang.serialization.Codec;
 import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.extensions.mixins.ChunkGeneratorSettingsInvoker;
+import dev.vatuu.tesseract.registry.TesseractException;
 import dev.vatuu.tesseract.registry.TesseractRegistry;
-import dev.vatuu.tesseract.registry.TesseractRegistryException;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
@@ -126,11 +126,11 @@ public class ChunkGeneratorBuilder {
             return parent;
         }
 
-        public ChunkGeneratorSettings build() {
+        private ChunkGeneratorSettings build() {
             return ChunkGeneratorSettingsInvoker.init(structuresConfig, generationShapeConfig, defaultBlock, defaultFluid, bedrockCeilingY, bedrockFloorY, seaLevel, mobGenerationDisabled);
         }
 
-        public RegistryKey<ChunkGeneratorSettings> register() throws TesseractRegistryException {
+        public RegistryKey<ChunkGeneratorSettings> register() throws TesseractException {
             return TesseractRegistry.getInstance().registerChunkGeneratorSettings(build(), getParent().name);
         }
 
@@ -218,7 +218,7 @@ public class ChunkGeneratorBuilder {
             return parent;
         }
 
-        public GenerationShapeConfig build() {
+        private GenerationShapeConfig build() {
             return GenerationShapeConfig.method_32994(minY, height, sampling, topSlide, bottomSlide, horizontalSize, verticalSize, densityFactor, densityOffset, simplexSurfaceNoise, randomDensityOffset, islandNoiseOverride, amplified);
         }
         

@@ -55,7 +55,7 @@ public class TesseractRegistry {
             throw new TesseractException(String.format("ChunkGeneratorSettings %s has already been registered!", id));
 
         Registry.register(chunkGeneratorSettingsRegistry, id, type);
-        
+
         return key;
     }
 

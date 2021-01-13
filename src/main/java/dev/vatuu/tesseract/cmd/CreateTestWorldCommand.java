@@ -46,7 +46,7 @@ public class CreateTestWorldCommand {
             DIMENSION_WORLD = TesseractManagement.getInstance().createWorld(DIMENSION_TYPE, Tesseract.id("telesis"), DimensionState.RESET);
 
             src.getSource().getPlayer().moveToWorld(src.getSource().getMinecraftServer().getWorld(DIMENSION_WORLD));
-            src.getSource().getPlayer().teleport(0, 64, 0);
+            src.getSource().getPlayer().teleport(0, 128, 0);
         } catch(TesseractException e) {
             e.printStackTrace();
             return 0;
