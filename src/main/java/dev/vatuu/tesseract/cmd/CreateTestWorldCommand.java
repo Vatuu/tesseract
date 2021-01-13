@@ -10,7 +10,9 @@ import dev.vatuu.tesseract.registry.TesseractException;
 import dev.vatuu.tesseract.world.ChunkGeneratorBuilder;
 import dev.vatuu.tesseract.world.DimensionState;
 import dev.vatuu.tesseract.world.DimensionTypeBuilder;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.block.Blocks;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
@@ -30,32 +32,7 @@ public class CreateTestWorldCommand {
 
     public static RegistryKey<World> DIMENSION_WORLD;
     public static RegistryKey<DimensionType> DIMENSION_TYPE;
-    public static final ChunkGenerator CHUNK_GENERATOR = ChunkGeneratorBuilder.createNoise(new Identifier("tesseract:test"))
-            .setBiomeSource(new VanillaLayeredBiomeSource(new Random().nextLong(), false, false, registries.get(Registry.BIOME_KEY)))
-            .createGeneratorSettings(chunkGeneratorSettingsBuilder -> {
-                chunkGeneratorSettingsBuilder.setStructuresConfig(new StructuresConfig(true))
-                        .createGenerationShapeConfig(generationShapeConfigBuilder -> {
-                            generationShapeConfigBuilder.setMinY(0)
-                                    .setHeight(256)
-                                    .setSampling(new NoiseSamplingConfig(0.9999999814507745D, 0.9999999814507745D, 80.0D, 160.0D))
-                                    .setTopSlide(new SlideConfig(-10, 3, 0))
-                                    .setBottomSlide(new SlideConfig(-30, 0, 0))
-                                    .setHorizontalSize(1)
-                                    .setVerticalSize(2)
-                                    .setDensityFactor(1.0D)
-                                    .setDensityOffset(-0.46875D)
-                                    .setSimplexSurfaceNoise(true)
-                                    .setRandomDensityOffset(true)
-                                    .setIslandNoiseOverride(false)
-                                    .setAmplified(false);
-                        })
-                        .setDefaultBlock(Blocks.STONE.getDefaultState())
-                        .setDefaultFluid(Blocks.WATER.getDefaultState())
-                        .setBedrockCeilingY(Integer.MIN_VALUE)
-                        .setBedrockFloorY(0)
-                        .setSeaLevel(63)
-                        .setMobGenerationDisabled(false);
-            }).build();
+    public static ChunkGenerator CHUNK_GENERATOR;
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
@@ -63,6 +40,33 @@ public class CreateTestWorldCommand {
                     .requires(src -> src.hasPermissionLevel(4))
                     .executes(CreateTestWorldCommand::activate)
         );
+
+        ServerLifecycleEvents.SERVER_STARTED.register(t -> CHUNK_GENERATOR = ChunkGeneratorBuilder.createNoise(new Identifier("tesseract:test"))
+                .setBiomeSource(new VanillaLayeredBiomeSource(new Random().nextLong(), false, false, t.getRegistryManager().get(Registry.BIOME_KEY)))
+                .createGeneratorSettings(chunkGeneratorSettingsBuilder -> {
+                    chunkGeneratorSettingsBuilder.setStructuresConfig(new StructuresConfig(true))
+                            .createGenerationShapeConfig(generationShapeConfigBuilder -> {
+                                generationShapeConfigBuilder.setMinY(0)
+                                        .setHeight(256)
+                                        .setSampling(new NoiseSamplingConfig(0.9999999814507745D, 0.9999999814507745D, 80.0D, 160.0D))
+                                        .setTopSlide(new SlideConfig(-10, 3, 0))
+                                        .setBottomSlide(new SlideConfig(-30, 0, 0))
+                                        .setHorizontalSize(1)
+                                        .setVerticalSize(2)
+                                        .setDensityFactor(1.0D)
+                                        .setDensityOffset(-0.46875D)
+                                        .setSimplexSurfaceNoise(true)
+                                        .setRandomDensityOffset(true)
+                                        .setIslandNoiseOverride(false)
+                                        .setAmplified(false);
+                            })
+                            .setDefaultBlock(Blocks.STONE.getDefaultState())
+                            .setDefaultFluid(Blocks.WATER.getDefaultState())
+                            .setBedrockCeilingY(Integer.MIN_VALUE)
+                            .setBedrockFloorY(0)
+                            .setSeaLevel(63)
+                            .setMobGenerationDisabled(false);
+                }).build());
     }
 
     private static int activate(CommandContext<ServerCommandSource> src) throws CommandSyntaxException {
