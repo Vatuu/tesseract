@@ -80,7 +80,7 @@ public class TesseractRegistry {
 
     public DimensionType getDimensionType(RegistryKey<DimensionType> key) throws TesseractException {
         try {
-            return dimensionTypeRegistry.getOrThrow(key);
+            return tesseractRegistry.getOrThrow(key);
         } catch(IllegalStateException e) {
             throw new TesseractException(String.format("The DimensionType %s does not exist!", key));
         }
