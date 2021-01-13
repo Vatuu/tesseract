@@ -2,6 +2,7 @@ package dev.vatuu.tesseract.registry;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.mojang.serialization.Codec;
 import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.cmd.CreateTestWorldCommand;
 import dev.vatuu.tesseract.extensions.ServerWorldExt;
@@ -25,6 +26,8 @@ import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.border.WorldBorderListener;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.GeneratorOptions;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
 import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
 import net.minecraft.world.level.UnmodifiableLevelProperties;
 import org.apache.commons.io.FileUtils;
@@ -45,12 +48,16 @@ public class TesseractRegistry {
     private final SaveProperties saveProperties;
 
     private final Registry<DimensionType> dimensionTypeRegistry;
+    //private final Registry<Codec<? extends ChunkGenerator>> chunkGeneratorRegistry;
+    private final Registry<ChunkGeneratorSettings> chunkGeneratorSettingsRegistry;
 
     private TesseractRegistry(MinecraftServer server) {
         this.server = server;
         this.registries = server.getRegistryManager();
         this.saveProperties = server.getSaveProperties();
-        this.dimensionTypeRegistry = registries.get(Registry.DIMENSION_TYPE_KEY);;
+        this.dimensionTypeRegistry = registries.get(Registry.DIMENSION_TYPE_KEY);
+        //this.chunkGeneratorRegistry = registries.get(Registry.CHUNK_GENERATOR_KEY);
+        this.chunkGeneratorSettingsRegistry = registries.get(Registry.NOISE_SETTINGS_WORLDGEN);
     }
 
     public static TesseractRegistry getInstance() {
@@ -64,6 +71,28 @@ public class TesseractRegistry {
             throw new TesseractRegistryException(String.format("DimensionType %s has already been registered!", id));
 
         Registry.register(dimensionTypeRegistry, id, type);
+
+        return key;
+    }
+
+//    public RegistryKey<ChunkGeneratorSettings> registerChunkGenerator(ChunkGeneratorSettings type, Identifier id) throws TesseractRegistryException {
+//        RegistryKey<Codec<? extends ChunkGenerator>> key = RegistryKey.of(Registry.CHUNK_GENERATOR_KEY, id);
+//
+//        if(chunkGeneratorRegistry.containsId(id))
+//            throw new TesseractRegistryException(String.format("ChunkGenerator %s has already been registered!", id));
+//
+//        Registry.register(chunkGeneratorRegistry, id, type);
+//
+//        return key;
+//    }
+
+    public RegistryKey<ChunkGeneratorSettings> registerChunkGeneratorSettings(ChunkGeneratorSettings type, Identifier id) throws TesseractRegistryException {
+        RegistryKey<ChunkGeneratorSettings> key = RegistryKey.of(Registry.NOISE_SETTINGS_WORLDGEN, id);
+
+        if(chunkGeneratorSettingsRegistry.containsId(id))
+            throw new TesseractRegistryException(String.format("ChunkGeneratorSettings %s has already been registered!", id));
+
+        Registry.register(chunkGeneratorSettingsRegistry, id, type);
 
         return key;
     }
