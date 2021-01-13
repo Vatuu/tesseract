@@ -1,12 +1,12 @@
 package dev.vatuu.tesseract.cmd;
 
-import com.google.common.collect.Lists;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.vatuu.tesseract.Tesseract;
+import dev.vatuu.tesseract.registry.TesseractManagement;
 import dev.vatuu.tesseract.registry.TesseractRegistry;
-import dev.vatuu.tesseract.registry.TesseractRegistryException;
+import dev.vatuu.tesseract.registry.TesseractException;
 import dev.vatuu.tesseract.world.DimensionState;
 import dev.vatuu.tesseract.world.DimensionTypeBuilder;
 import net.minecraft.server.command.CommandManager;
@@ -43,10 +43,11 @@ public class CreateTestWorldCommand {
                     .setFixedTime(0)
                     .register();
 
-            DIMENSION_WORLD = TesseractRegistry.getInstance().createWorld(DIMENSION_TYPE, Tesseract.id("telesis"), DimensionState.RESET);
+            DIMENSION_WORLD = TesseractManagement.getInstance().createWorld(DIMENSION_TYPE, Tesseract.id("telesis"), DimensionState.RESET);
 
-            src.getSource().getPlayer().teleport(src.getSource().getMinecraftServer().getWorld(DIMENSION_WORLD), 0, 64, 0, 0, 0);
-        } catch(TesseractRegistryException e) {
+            src.getSource().getPlayer().moveToWorld(src.getSource().getMinecraftServer().getWorld(DIMENSION_WORLD));
+            src.getSource().getPlayer().teleport(0, 64, 0);
+        } catch(TesseractException e) {
             e.printStackTrace();
             return 0;
         }
