@@ -1,6 +1,7 @@
 package dev.vatuu.tesseract;
 
 import dev.vatuu.tesseract.cmd.CreateTestWorldCommand;
+import dev.vatuu.tesseract.cmd.RegenerateWorldCommand;
 import dev.vatuu.tesseract.network.NetworkHandler;
 import dev.vatuu.tesseract.registry.TesseractRegistry;
 import net.fabricmc.api.ModInitializer;
@@ -26,7 +27,10 @@ public class Tesseract implements ModInitializer {
         INSTANCE = this;
 
         if(FabricLoader.getInstance().isDevelopmentEnvironment())
-            CommandRegistrationCallback.EVENT.register((dis, b) -> CreateTestWorldCommand.register(dis));
+            CommandRegistrationCallback.EVENT.register((dis, b) ->  {
+                CreateTestWorldCommand.register(dis);
+                RegenerateWorldCommand.register(dis);
+            });
 
         ServerLifecycleEvents.SERVER_STARTED.register(t -> TesseractRegistry.setInstance(t.getNetworkIo().getServer()));
 

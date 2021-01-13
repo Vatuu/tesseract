@@ -17,6 +17,9 @@ import net.minecraft.world.dimension.DimensionType;
 
 public class CreateTestWorldCommand {
 
+    public static RegistryKey<World> DIMENSION_WORLD;
+    public static RegistryKey<DimensionType> DIMENSION_TYPE;
+
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("registerTest")
@@ -27,7 +30,7 @@ public class CreateTestWorldCommand {
 
     private static int activate(CommandContext<ServerCommandSource> src) throws CommandSyntaxException {
         try {
-            RegistryKey<DimensionType> telesis = DimensionTypeBuilder.create(Tesseract.id("telesis"))
+            DIMENSION_TYPE = DimensionTypeBuilder.create(Tesseract.id("telesis"))
                     .doBedsExplode(true)
                     .doBeesExplode(true)
                     .hasSkylight(false)
@@ -40,10 +43,9 @@ public class CreateTestWorldCommand {
                     .setFixedTime(0)
                     .register();
 
-            RegistryKey<World> world = TesseractRegistry.getInstance().createWorld(telesis, Tesseract.id("telesis"), DimensionState.RESET);
+            DIMENSION_WORLD = TesseractRegistry.getInstance().createWorld(DIMENSION_TYPE, Tesseract.id("telesis"), DimensionState.RESET);
 
-            src.getSource().getPlayer().teleport(src.getSource().getMinecraftServer().getWorld(world), 0, 64, 0, 0, 0);
-
+            src.getSource().getPlayer().teleport(src.getSource().getMinecraftServer().getWorld(DIMENSION_WORLD), 0, 64, 0, 0, 0);
         } catch(TesseractRegistryException e) {
             e.printStackTrace();
             return 0;
