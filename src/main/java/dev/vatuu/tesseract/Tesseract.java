@@ -3,6 +3,7 @@ package dev.vatuu.tesseract;
 import dev.vatuu.tesseract.cmd.CreateTestWorldCommand;
 import dev.vatuu.tesseract.cmd.RegenerateWorldCommand;
 import dev.vatuu.tesseract.network.NetworkHandler;
+import dev.vatuu.tesseract.registry.TesseractManagement;
 import dev.vatuu.tesseract.registry.TesseractRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -32,7 +33,10 @@ public class Tesseract implements ModInitializer {
                 RegenerateWorldCommand.register(dis);
             });
 
-        ServerLifecycleEvents.SERVER_STARTED.register(t -> TesseractRegistry.setInstance(t.getNetworkIo().getServer()));
+        ServerLifecycleEvents.SERVER_STARTED.register(t -> {
+            TesseractRegistry.setInstance(t.getNetworkIo().getServer());
+            TesseractManagement.setInstance(t.getNetworkIo().getServer());
+        });
 
         this.networkHandler = new NetworkHandler();
     }

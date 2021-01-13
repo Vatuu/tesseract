@@ -2,7 +2,7 @@ package dev.vatuu.tesseract.world;
 
 import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.registry.TesseractRegistry;
-import dev.vatuu.tesseract.registry.TesseractRegistryException;
+import dev.vatuu.tesseract.registry.TesseractException;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.source.BiomeAccessType;
@@ -126,7 +126,7 @@ public class DimensionTypeBuilder {
                 raids,  minY, height, logicalHeight, biomeAccessType, Tesseract.id("none"), skyPropertiesKey, ambientLight);
     }
 
-    public RegistryKey<DimensionType> register() throws TesseractRegistryException {
+    public RegistryKey<DimensionType> register() throws TesseractException {
         return TesseractRegistry.getInstance().registerDimension(build(), name);
     }
 }
