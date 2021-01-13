@@ -28,6 +28,7 @@ public class RegenerateWorldCommand {
             CreateTestWorldCommand.DIMENSION_WORLD = TesseractManagement.getInstance().createWorld(
                     CreateTestWorldCommand.DIMENSION_TYPE,
                     CreateTestWorldCommand.DIMENSION_WORLD.getValue(),
+                    CreateTestWorldCommand.CHUNK_GENERATOR,
                     DimensionState.RESET);
 
             ctx.getSource().getPlayer().teleport(ctx.getSource().getMinecraftServer().getWorld(CreateTestWorldCommand.DIMENSION_WORLD), 0, 128, 0, 0, 0);

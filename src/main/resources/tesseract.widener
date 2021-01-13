@@ -14,3 +14,7 @@ accessible field net/minecraft/client/render/entity/model/PlayerEntityModel cloa
 
 # Common
 accessible field net/minecraft/util/registry/DefaultedRegistry defaultValue Ljava/lang/Object;
+accessible field net/minecraft/world/dimension/DimensionType ambientLight F
+accessible field net/minecraft/world/dimension/DimensionType infiniburn Lnet/minecraft/util/Identifier;
+accessible field net/minecraft/world/dimension/DimensionType fixedTime Ljava/util/OptionalLong;
+
