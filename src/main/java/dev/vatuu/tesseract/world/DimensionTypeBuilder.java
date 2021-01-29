@@ -1,8 +1,8 @@
 package dev.vatuu.tesseract.world;
 
 import dev.vatuu.tesseract.Tesseract;
-import dev.vatuu.tesseract.registry.TesseractRegistry;
 import dev.vatuu.tesseract.registry.TesseractException;
+import dev.vatuu.tesseract.registry.TesseractRegistry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.source.BiomeAccessType;

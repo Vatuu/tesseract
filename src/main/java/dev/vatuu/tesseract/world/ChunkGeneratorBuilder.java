@@ -1,22 +1,15 @@
 package dev.vatuu.tesseract.world;
 
-import com.mojang.serialization.Codec;
-import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.extensions.mixins.ChunkGeneratorSettingsInvoker;
 import dev.vatuu.tesseract.registry.TesseractException;
 import dev.vatuu.tesseract.registry.TesseractRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.*;
 
-import java.util.OptionalLong;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class ChunkGeneratorBuilder {
 

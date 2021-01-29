@@ -2,7 +2,6 @@ package dev.vatuu.tesseract.client.network;
 
 import dev.vatuu.tesseract.network.AbstractS2CPacket;
 import dev.vatuu.tesseract.network.PacketS2CSyncDimensionTypes;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;

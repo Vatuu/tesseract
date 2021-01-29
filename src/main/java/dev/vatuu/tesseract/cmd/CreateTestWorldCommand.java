@@ -4,15 +4,13 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.vatuu.tesseract.Tesseract;
-import dev.vatuu.tesseract.registry.TesseractManagement;
-import dev.vatuu.tesseract.registry.TesseractRegistry;
 import dev.vatuu.tesseract.registry.TesseractException;
+import dev.vatuu.tesseract.registry.TesseractManagement;
 import dev.vatuu.tesseract.world.ChunkGeneratorBuilder;
 import dev.vatuu.tesseract.world.DimensionState;
 import dev.vatuu.tesseract.world.DimensionTypeBuilder;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.block.Blocks;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
@@ -21,10 +19,7 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.source.VanillaLayeredBiomeSource;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.minecraft.world.gen.chunk.NoiseSamplingConfig;
-import net.minecraft.world.gen.chunk.SlideConfig;
-import net.minecraft.world.gen.chunk.StructuresConfig;
+import net.minecraft.world.gen.chunk.*;
 
 import java.util.Random;
 
@@ -84,10 +79,16 @@ public class CreateTestWorldCommand {
                     .setFixedTime(0)
                     .register();
 
-            DIMENSION_WORLD = TesseractManagement.getInstance().createWorld(DIMENSION_TYPE, Tesseract.id("telesis"), CHUNK_GENERATOR, DimensionState.RESET);
+            DIMENSION_WORLD = TesseractManagement.getInstance().createWorld(
+                    DIMENSION_TYPE,
+                    Tesseract.id("telesis_w"),
+                    CHUNK_GENERATOR,
+                    DimensionState.SAVE);
 
-            src.getSource().getPlayer().moveToWorld(src.getSource().getMinecraftServer().getWorld(DIMENSION_WORLD));
-            src.getSource().getPlayer().teleport(0, 128, 0);
+            src.getSource().getPlayer().teleport(
+                    src.getSource().getMinecraftServer().getWorld(DIMENSION_WORLD),
+                    0, 80, 0,
+                    0, 0);
         } catch(TesseractException e) {
             e.printStackTrace();
             return 0;

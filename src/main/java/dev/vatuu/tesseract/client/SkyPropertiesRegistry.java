@@ -5,8 +5,9 @@ import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.client.world.TesseractSkyProperties;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.fabricmc.fabric.impl.registry.sync.FabricRegistry;
-
-import net.minecraft.util.registry.*;
+import net.minecraft.util.registry.DefaultedRegistry;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 
 import java.util.Collections;
 

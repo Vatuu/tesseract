@@ -26,19 +26,13 @@ public abstract class ServerWorldMixin extends World implements ServerWorldExt {
         super(properties, registryRef, dimensionType, profiler, isClient, debugWorld, seed);
     }
 
-    @Override @Unique
+    @Override
     public DimensionState getSaveState() {
         return saveState;
     }
 
-    @Override @Unique
+    @Override
     public void setSaveState(DimensionState state) {
         this.saveState = state;
-    }
-
-    @Inject(method = "save", at = @At("HEAD"), cancellable = true)
-    private void saveOverride(ProgressListener pogress, boolean flush, boolean bool, CallbackInfo info) {
-//        if(saveState != null && saveState.shouldReset())
-//            info.cancel();
     }
 }

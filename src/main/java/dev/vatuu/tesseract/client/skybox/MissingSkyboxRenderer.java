@@ -1,7 +1,9 @@
 package dev.vatuu.tesseract.client.skybox;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.vatuu.tesseract.Tesseract;
 import net.minecraft.client.render.*;
+import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
@@ -17,7 +19,7 @@ public class MissingSkyboxRenderer extends SkyboxRenderer {
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(false);
 
-        getTextureManager().bindTexture(new Identifier(""));
+        getTextureManager().bindTexture(Tesseract.id("what"));
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();

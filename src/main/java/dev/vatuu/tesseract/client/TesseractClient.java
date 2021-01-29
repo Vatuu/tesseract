@@ -3,11 +3,11 @@ package dev.vatuu.tesseract.client;
 import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.client.network.ClientNetworkHandler;
 import dev.vatuu.tesseract.client.skybox.EndSkyboxRenderer;
+import dev.vatuu.tesseract.client.skybox.MissingSkyboxRenderer;
 import dev.vatuu.tesseract.client.world.SkyPropertiesBuilder;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;
 
 public class TesseractClient implements ClientModInitializer {

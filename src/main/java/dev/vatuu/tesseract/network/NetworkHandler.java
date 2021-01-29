@@ -25,5 +25,4 @@ public final class NetworkHandler {
     private void register(AbstractC2SPacket packet) {
         ServerPlayNetworking.registerGlobalReceiver(packet.getId(), (s, p, h, b, sender) -> packet.onReceive(s, p, h));
     }
-
 }

@@ -1,32 +1,19 @@
 package dev.vatuu.tesseract.registry;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import com.mojang.serialization.Lifecycle;
 import dev.vatuu.tesseract.Tesseract;
-import dev.vatuu.tesseract.cmd.CreateTestWorldCommand;
-import dev.vatuu.tesseract.extensions.ServerWorldExt;
-import dev.vatuu.tesseract.network.PacketS2CSyncDimensionTypes;
-import dev.vatuu.tesseract.world.DimensionState;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.command.argument.DimensionArgumentType;
+import dev.vatuu.tesseract.extensions.SimpleRegistryExt;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.SimpleRegistry;
+import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.GeneratorOptions;
 import net.minecraft.world.gen.chunk.ChunkGeneratorSettings;
-import net.minecraft.world.gen.chunk.NoiseChunkGenerator;
-import net.minecraft.world.level.UnmodifiableLevelProperties;
-import org.apache.commons.io.FileUtils;
-import sun.java2d.pipe.SpanShapeRenderer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TesseractRegistry {
@@ -34,17 +21,17 @@ public class TesseractRegistry {
     private static TesseractRegistry INSTANCE;
 
     private final Registry<DimensionType> dimensionTypeRegistry;
-    private final Registry<DimensionType> tesseractRegistry;
     private final Registry<ChunkGeneratorSettings> chunkGeneratorSettingsRegistry;
 
     private final RegistryKey<Registry<DimensionType>> tesseractRegistryKey = RegistryKey.ofRegistry(Tesseract.id("tesseract"));
-    private final Map<RegistryKey<DimensionType>, List<DimensionType>> typeChildren;
+    private final Registry<DimensionType> tesseractRegistry;
+    private final Map<RegistryKey<World>, Pair<RegistryKey<DimensionType>, RegistryKey<DimensionType>>> worldSpecificTracker;
 
     private TesseractRegistry(MinecraftServer server) {
         this.dimensionTypeRegistry = server.getRegistryManager().get(Registry.DIMENSION_TYPE_KEY);
         this.tesseractRegistry = new SimpleRegistry<>(tesseractRegistryKey, Lifecycle.experimental());
         this.chunkGeneratorSettingsRegistry = server.getRegistryManager().get(Registry.NOISE_SETTINGS_WORLDGEN);
-        this.typeChildren = new HashMap<>();
+        this.worldSpecificTracker = new HashMap<>();
     }
 
     public static TesseractRegistry getInstance() {
@@ -58,11 +45,14 @@ public class TesseractRegistry {
     public RegistryKey<DimensionType> registerDimension(DimensionType type, Identifier id) throws TesseractException {
         RegistryKey<DimensionType> key = RegistryKey.of(tesseractRegistryKey, id);
 
-        if(tesseractRegistry.containsId(id) || typeChildren.containsKey(key))
+        if(tesseractRegistry.containsId(id))
             throw new TesseractException(String.format("DimensionType %s has already been registered!", id));
+        if(worldSpecificTracker.values().stream().anyMatch(p -> p.getRight().equals(key)))
+            throw new TesseractException(String.format("DimensionType %s has already been registered as a world-specific type!", id));
+        if(dimensionTypeRegistry.containsId(id))
+            throw new TesseractException(String.format("DimensionType %s has already been registered in a non-tesseract context!", id));
 
         Registry.register(tesseractRegistry, id, type);
-        typeChildren.put(key, new ArrayList<>());
 
         return key;
     }
@@ -81,24 +71,38 @@ public class TesseractRegistry {
     public DimensionType getDimensionType(RegistryKey<DimensionType> key) throws TesseractException {
         try {
             return tesseractRegistry.getOrThrow(key);
-        } catch(IllegalStateException e) {
+        } catch (IllegalStateException e) {
             throw new TesseractException(String.format("The DimensionType %s does not exist!", key));
         }
     }
 
-    DimensionType registerWorldCopy(RegistryKey<DimensionType> type, Identifier id) throws TesseractException {
+    DimensionType registerWorldCopy(RegistryKey<World> world, RegistryKey<DimensionType> type, Identifier id) throws TesseractException {
+        RegistryKey<DimensionType> key = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, id);
+
+        if(tesseractRegistry.containsId(id))
+            throw new TesseractException(String.format("World-specific DimensionType %s is already a regular DimensionType!", id));
+        if(worldSpecificTracker.values().stream().anyMatch(p -> p.getRight().equals(RegistryKey.of(Registry.DIMENSION_TYPE_KEY, id))))
+            throw new TesseractException(String.format("\"World-specific DimensionType %s has already been registered!", id));
         if(dimensionTypeRegistry.containsId(id))
-            throw new TesseractException(String.format("DimensionType for World %s has already been registered!", id));
+            throw new TesseractException(String.format("World-specific DimensionType %s has already been registered in a non-tesseract context!", id));
 
         DimensionType copy = copyDimensionType(type);
         Registry.register(dimensionTypeRegistry, id, copy);
 
-        typeChildren.computeIfPresent(type, (k, v) -> {
-            v.add(copy);
-            return v;
-        });
+        worldSpecificTracker.put(world, new Pair<>(type, key));
 
         return copy;
+    }
+
+    @SuppressWarnings("unchecked")
+    void unregisterWorldCopy(RegistryKey<World> world) throws TesseractException {
+        if(world.equals(World.OVERWORLD) || world.equals(World.NETHER) || world.equals(World.END))
+            throw new TesseractException("Vanilla Worlds do not have world-specific types!");
+        if(!worldSpecificTracker.containsKey(world))
+            throw new TesseractException(String.format("%s is not a world-specific dimension type!", world));
+
+        Pair<RegistryKey<DimensionType>, RegistryKey<DimensionType>> types = worldSpecificTracker.remove(world);
+        ((SimpleRegistryExt<DimensionType>)dimensionTypeRegistry).remove(types.getRight());
     }
 
     private DimensionType copyDimensionType(RegistryKey<DimensionType> key) throws TesseractException {
