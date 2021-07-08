@@ -14,7 +14,6 @@ public class MissingSkyboxRenderer extends SkyboxRenderer {
 
     @Override
     public void renderSky(MatrixStack stack, ClientWorld world, Camera cam, float tickDelta) {
-        RenderSystem.disableAlphaTest();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(false);
@@ -57,6 +56,5 @@ public class MissingSkyboxRenderer extends SkyboxRenderer {
         RenderSystem.depthMask(true);
         RenderSystem.enableTexture();
         RenderSystem.disableBlend();
-        RenderSystem.enableAlphaTest();
     }
 }

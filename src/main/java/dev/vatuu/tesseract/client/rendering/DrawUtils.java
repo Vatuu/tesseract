@@ -1,10 +1,10 @@
-package dev.vatuu.tesseract.extras.lil.rendering;
+package dev.vatuu.tesseract.client.rendering;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.util.math.*;
 
 import java.util.stream.Stream;
 
@@ -60,5 +60,15 @@ public final class DrawUtils {
 
     public static void renderCube(Vec3d pos, float radius, VertexConsumer consumer, Matrix4f model) {
         Stream.of(Direction.values()).forEach(dir -> DrawUtils.quadOffsetAxis(pos, radius, dir, consumer, model));
+    }
+
+    public static void drawLineStrip(Vec3d pos, Vec4f colour, float lineWidth, VertexConsumer consumer, Camera cam, Matrix3f normals) {
+        Vec3f normal = Vec3f.ZERO;
+
+        RenderSystem.lineWidth(lineWidth);
+        consumer.vertex(pos.getX(), pos.getY(), pos.getZ())
+                .color(colour.x(), colour.y(), colour.z(), colour.w())
+                .normal(normals, normal.getX(), normal.getY(), normal.getZ())
+                .next();
     }
 }

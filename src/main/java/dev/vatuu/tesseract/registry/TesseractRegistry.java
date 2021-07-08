@@ -30,7 +30,7 @@ public class TesseractRegistry {
     private TesseractRegistry(MinecraftServer server) {
         this.dimensionTypeRegistry = server.getRegistryManager().get(Registry.DIMENSION_TYPE_KEY);
         this.tesseractRegistry = new SimpleRegistry<>(tesseractRegistryKey, Lifecycle.experimental());
-        this.chunkGeneratorSettingsRegistry = server.getRegistryManager().get(Registry.NOISE_SETTINGS_WORLDGEN);
+        this.chunkGeneratorSettingsRegistry = server.getRegistryManager().get(Registry.CHUNK_GENERATOR_SETTINGS_KEY);
         this.worldSpecificTracker = new HashMap<>();
     }
 
@@ -58,7 +58,7 @@ public class TesseractRegistry {
     }
 
     public RegistryKey<ChunkGeneratorSettings> registerChunkGeneratorSettings(ChunkGeneratorSettings type, Identifier id) throws TesseractException {
-        RegistryKey<ChunkGeneratorSettings> key = RegistryKey.of(Registry.NOISE_SETTINGS_WORLDGEN, id);
+        RegistryKey<ChunkGeneratorSettings> key = RegistryKey.of(Registry.CHUNK_GENERATOR_SETTINGS_KEY, id);
 
         if(chunkGeneratorSettingsRegistry.containsId(id))
             throw new TesseractException(String.format("ChunkGeneratorSettings %s has already been registered!", id));
@@ -107,7 +107,7 @@ public class TesseractRegistry {
 
     private DimensionType copyDimensionType(RegistryKey<DimensionType> key) throws TesseractException {
         DimensionType type = getDimensionType(key);
-        return DimensionType.method_32922(
+        return DimensionType.create(
                 type.fixedTime,
                 type.hasSkyLight(), type.hasCeiling(), type.isUltrawarm(), type.isNatural(),
                 type.getCoordinateScale(), type.hasEnderDragonFight(),

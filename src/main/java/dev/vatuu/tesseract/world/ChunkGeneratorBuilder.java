@@ -120,7 +120,7 @@ public class ChunkGeneratorBuilder {
         }
 
         private ChunkGeneratorSettings build() {
-            return ChunkGeneratorSettingsInvoker.init(structuresConfig, generationShapeConfig, defaultBlock, defaultFluid, bedrockCeilingY, bedrockFloorY, seaLevel, mobGenerationDisabled);
+            return ChunkGeneratorSettingsInvoker.init(structuresConfig, generationShapeConfig, defaultBlock, defaultFluid, bedrockCeilingY, bedrockFloorY, seaLevel, 0, true, false, false, false, false, false);
         }
 
         public RegistryKey<ChunkGeneratorSettings> register() throws TesseractException {
@@ -212,7 +212,7 @@ public class ChunkGeneratorBuilder {
         }
 
         private GenerationShapeConfig build() {
-            return GenerationShapeConfig.method_32994(minY, height, sampling, topSlide, bottomSlide, horizontalSize, verticalSize, densityFactor, densityOffset, simplexSurfaceNoise, randomDensityOffset, islandNoiseOverride, amplified);
+            return GenerationShapeConfig.create(minY, height, sampling, topSlide, bottomSlide, horizontalSize, verticalSize, densityFactor, densityOffset, simplexSurfaceNoise, randomDensityOffset, islandNoiseOverride, amplified);
         }
         
     }

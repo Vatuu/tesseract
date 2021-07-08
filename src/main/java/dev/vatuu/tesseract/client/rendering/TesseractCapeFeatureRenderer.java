@@ -1,4 +1,4 @@
-package dev.vatuu.tesseract.extras.fancy;
+package dev.vatuu.tesseract.client.rendering;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -29,7 +29,7 @@ public class TesseractCapeFeatureRenderer extends FeatureRenderer<AbstractClient
     private static final Random RANDOM = new Random(31100L);
     private static final int LAYER_COUNT = 15;
     private static final float LAYER_0_INTENSITY = 0.15F;
-    private static final List<RenderLayer> RENDER_LAYERS = IntStream.range(0, 16).mapToObj((i) -> RenderLayer.getEndPortal(i + 1)).collect(ImmutableList.toImmutableList());
+    private static final List<RenderLayer> RENDER_LAYERS = IntStream.range(0, 16).mapToObj((i) -> RenderLayer.getEndPortal()).collect(ImmutableList.toImmutableList());
 
     public TesseractCapeFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context) {
         super(context);

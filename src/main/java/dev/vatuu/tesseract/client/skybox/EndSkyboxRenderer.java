@@ -13,7 +13,6 @@ public class EndSkyboxRenderer extends SkyboxRenderer {
     private static final Identifier END_SKY = new Identifier("textures/environment/end_sky.png");
 
     public void renderSky(MatrixStack stack, ClientWorld w, Camera cam, float tickDelta) {
-        RenderSystem.disableAlphaTest();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(false);
@@ -55,6 +54,5 @@ public class EndSkyboxRenderer extends SkyboxRenderer {
         RenderSystem.depthMask(true);
         RenderSystem.enableTexture();
         RenderSystem.disableBlend();
-        RenderSystem.enableAlphaTest();
     }
 }

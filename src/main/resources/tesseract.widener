@@ -18,3 +18,6 @@ accessible field net/minecraft/world/dimension/DimensionType ambientLight F
 accessible field net/minecraft/world/dimension/DimensionType infiniburn Lnet/minecraft/util/Identifier;
 accessible field net/minecraft/world/dimension/DimensionType fixedTime Ljava/util/OptionalLong;
 
+# Rendering
+accessible method net/minecraft/client/render/RenderLayer of (Ljava/lang/String;Lnet/minecraft/client/render/VertexFormat;Lnet/minecraft/client/render/VertexFormat$DrawMode;ILnet/minecraft/client/render/RenderLayer$MultiPhaseParameters;)Lnet/minecraft/client/render/RenderLayer$MultiPhase;
+

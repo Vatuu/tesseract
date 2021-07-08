@@ -1,6 +1,6 @@
 package dev.vatuu.tesseract.client.extensions.mixins;
 
-import dev.vatuu.tesseract.extras.fancy.TesseractCapeFeatureRenderer;
+import dev.vatuu.tesseract.client.rendering.TesseractCapeFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;

@@ -48,7 +48,7 @@ public final class TesseractManagement {
     }
 
     public RegistryKey<World> createWorld(RegistryKey<DimensionType> type, Identifier id, ChunkGenerator chunkGen, DimensionState state) throws TesseractException {
-        RegistryKey<World> key = RegistryKey.of(Registry.DIMENSION, id);
+        RegistryKey<World> key = RegistryKey.of(Registry.WORLD_KEY, id);
         if(server.worlds.containsKey(key))
             throw new TesseractException(String.format("World %s has already been created and not removed.", id));
 
@@ -87,7 +87,7 @@ public final class TesseractManagement {
         try {
             new ArrayList<>(w.getPlayers()).forEach(p -> {
                 BlockPos pos = server.getOverworld().getSpawnPos();
-                p.teleport(server.getOverworld(), pos.getX(), pos.getY(), pos.getZ(), p.yaw, p.pitch);
+                p.teleport(server.getOverworld(), pos.getX(), pos.getY(), pos.getZ(), p.getYaw(), p.getPitch());
             });
 
             w.close();

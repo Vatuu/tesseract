@@ -1,6 +1,5 @@
-package dev.vatuu.tesseract.extras.lil.rendering;
+package dev.vatuu.tesseract.client.rendering;
 
-import dev.vatuu.tesseract.extras.lil.TesseractSettings;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
@@ -9,42 +8,38 @@ import net.minecraft.util.math.Vec3d;
 
 public class TesseractRenderer {
 
-    public TesseractSettings settings;
-
     private float xAngle, yAngle, zAngle, wAngle;
 
-    private Vector4[] vertices = new Vector4[] {
-            new Vector4(-1, -1, -1, 1),
-            new Vector4(1, -1, -1, 1),
-            new Vector4(1, 1, -1, 1),
-            new Vector4(-1, 1, -1, 1),
-            new Vector4(-1, -1, 1, 1),
-            new Vector4(1, -1, 1, 1),
-            new Vector4(1, 1, 1, 1),
-            new Vector4(-1, 1, 1, 1),
+    private Vec4f[] vertices = new Vec4f[] {
+            new Vec4f(-1, -1, -1, 1),
+            new Vec4f(1, -1, -1, 1),
+            new Vec4f(1, 1, -1, 1),
+            new Vec4f(-1, 1, -1, 1),
+            new Vec4f(-1, -1, 1, 1),
+            new Vec4f(1, -1, 1, 1),
+            new Vec4f(1, 1, 1, 1),
+            new Vec4f(-1, 1, 1, 1),
 
-            new Vector4(-1, -1, -1, -1),
-            new Vector4(1, -1, -1, -1),
-            new Vector4(1, 1, -1, -1),
-            new Vector4(-1, 1, -1, -1),
-            new Vector4(-1, -1, 1, -1),
-            new Vector4(1, -1, 1, -1),
-            new Vector4(1, 1, 1, -1),
-            new Vector4(-1, 1, 1, -1),
+            new Vec4f(-1, -1, -1, -1),
+            new Vec4f(1, -1, -1, -1),
+            new Vec4f(1, 1, -1, -1),
+            new Vec4f(-1, 1, -1, -1),
+            new Vec4f(-1, -1, 1, -1),
+            new Vec4f(1, -1, 1, -1),
+            new Vec4f(1, 1, 1, -1),
+            new Vec4f(-1, 1, 1, -1),
     };
 
-    public TesseractRenderer(TesseractSettings settings) {
-        this.settings = settings;
-    }
-
-    public void render(MatrixStack modelview, VertexConsumerProvider vertexConsumers, float projectionDistance){
+    public void render(MatrixStack stack, VertexConsumerProvider vertexConsumers, float projectionDistance){
         VertexConsumer consumer = vertexConsumers.getBuffer(TesseractRenderLayers.TESSERACT_VERTEX);
 
-        modelview.push();
-        modelview.translate(0.5d, 0.5d, 0.5d);
-        Matrix4f model = modelview.peek().getModel();
+        stack.push();
 
-        Vec3d projectedPoints[] = new Vec3d[16];
+        stack.translate(0.5d, 0.5d, 0.5d);
+        stack.scale(.5F, .5F, .5F);
+        Matrix4f model = stack.peek().getModel();
+
+        Vec3d[] projectedPoints = new Vec3d[16];
         for (int i = 0; i < vertices.length; i++)
             projectedPoints[i] = vertices[i]
                     .rotateX(xAngle)
@@ -64,15 +59,15 @@ public class TesseractRenderer {
 
             DrawUtils.draw2Line(projectedPoints, i, i + 8, 4, consumer, model);
         }
-        modelview.pop();
-        updateRotation();
+
+        stack.pop();
     }
 
-    private void updateRotation() {
-        this.xAngle += settings.rotateX;
-        this.yAngle += settings.rotateY;
-        this.zAngle += settings.rotateZ;
-        this.wAngle += settings.rotateW;
+    public void updateRotation(Vec4f rotation) {
+        this.xAngle += rotation.x();
+        this.yAngle += rotation.y();
+        this.zAngle += rotation.z();
+        this.wAngle += rotation.z();
 
         if(xAngle > 360)
             xAngle -= 360;

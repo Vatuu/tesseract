@@ -1,9 +1,7 @@
-package dev.vatuu.tesseract.extras.lil.rendering;
+package dev.vatuu.tesseract.client.rendering;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexFormat;
-import net.minecraft.client.render.VertexFormatElement;
 import net.minecraft.client.render.VertexFormats;
 
 import java.util.OptionalDouble;
@@ -15,17 +13,10 @@ public class TesseractRenderLayers {
 
     private static class TesseractVertexRenderLayer extends RenderLayer {
 
-        private static final VertexFormat VERTEX_FORMAT = new VertexFormat(ImmutableList.<VertexFormatElement>builder()
-                .add(VertexFormats.POSITION_ELEMENT)
-                .add(VertexFormats.COLOR_ELEMENT)
-                .build()
-        );
-
-        private static final RenderLayer LAYER = RenderLayer.of("tesseract_vertex", VERTEX_FORMAT, VertexFormat.DrawMode.QUADS, 256, RenderLayer.MultiPhaseParameters.builder()
-                .transparency(TRANSLUCENT_TRANSPARENCY)
+        private static final RenderLayer LAYER = RenderLayer.of("tesseract_vertex", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.QUADS, 256, RenderLayer.MultiPhaseParameters.builder()
+                .shader(Shader.COLOR_SHADER)
                 .build(true)
         );
-
 
         private TesseractVertexRenderLayer(String name, VertexFormat vertexFormat, VertexFormat.DrawMode drawMode, int expectedBufferSize, boolean hasCrumbling, boolean translucent, Runnable startAction, Runnable endAction) {
             super(name, vertexFormat, drawMode, expectedBufferSize, hasCrumbling, translucent, startAction, endAction);
@@ -38,14 +29,8 @@ public class TesseractRenderLayers {
 
     private static class TesseractConnectionRenderLayer extends RenderLayer {
 
-        private static final VertexFormat VERTEX_FORMAT = new VertexFormat(ImmutableList.<VertexFormatElement>builder()
-                .add(VertexFormats.POSITION_ELEMENT)
-                .add(VertexFormats.COLOR_ELEMENT)
-                .build()
-        );
-
-        private static final RenderLayer LAYER = RenderLayer.of("tesseract_side", VERTEX_FORMAT, VertexFormat.DrawMode.LINES, 256, RenderLayer.MultiPhaseParameters.builder()
-                .transparency(TRANSLUCENT_TRANSPARENCY)
+        private static final RenderLayer LAYER = RenderLayer.of("tesseract_side", VertexFormats.POSITION_COLOR, VertexFormat.DrawMode.DEBUG_LINES, 256, RenderLayer.MultiPhaseParameters.builder()
+                .shader(Shader.LINES_SHADER)
                 .lineWidth(new LineWidth(OptionalDouble.of(2)))
                 .build(true)
         );

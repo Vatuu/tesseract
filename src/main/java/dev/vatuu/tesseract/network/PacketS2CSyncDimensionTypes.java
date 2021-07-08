@@ -43,7 +43,7 @@ public class PacketS2CSyncDimensionTypes implements AbstractS2CPacket {
 
         int size = buffer.readVarInt();
         for(int i = 0; i < size; i++)
-            this.worlds.add(RegistryKey.of(Registry.DIMENSION, buffer.readIdentifier()));
+            this.worlds.add(RegistryKey.of(Registry.WORLD_KEY, buffer.readIdentifier()));
         this.registry = buffer.decode(DynamicRegistryManager.Impl.CODEC);
     }
 

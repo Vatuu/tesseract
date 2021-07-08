@@ -1,17 +1,12 @@
-package dev.vatuu.tesseract.extras.lil.rendering;
+package dev.vatuu.tesseract.client.rendering;
 
+import com.google.common.collect.Lists;
+import com.mojang.serialization.Codec;
 import net.minecraft.util.math.Vec3d;
 
-public class Vector4 {
+public record Vec4f(float x, float y, float z, float w) {
 
-    public float x, y, z, w;
-
-    public Vector4(float x, float y, float z, float w) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
-    }
+    public static final Vec4f ZERO = new Vec4f(0, 0, 0, 0);
 
     public Vec3d projectTo3d(float distance) {
         float d = 1 / (distance - w);
@@ -29,7 +24,7 @@ public class Vector4 {
         return new Vec3d(xn, yn, zn);
     }
 
-    public Vector4 rotateX(float angle) {
+    public Vec4f rotateX(float angle) {
         float[][] rotateYZ = new float[][]{
                 {1, 0, 0, 0},
                 {0, (float) Math.cos(angle), (float) -Math.sin(angle), 0},
@@ -40,7 +35,7 @@ public class Vector4 {
         return matrixMultiplication4x4(rotateYZ);
     }
 
-    public Vector4 rotateY(float angle) {
+    public Vec4f rotateY(float angle) {
         float[][] rotateXZ = new float[][]{
                 {(float) Math.cos(angle), 0, (float) -Math.sin(angle), 0},
                 {0, 1, 0, 0},
@@ -51,7 +46,7 @@ public class Vector4 {
         return matrixMultiplication4x4(rotateXZ);
     }
 
-    public Vector4 rotateZ(float angle) {
+    public Vec4f rotateZ(float angle) {
         float[][] rotateXY = new float[][]{
                 {(float) Math.cos(angle), (float) -Math.sin(angle), 0, 0},
                 {(float) Math.sin(angle), (float) Math.cos(angle), 0, 0},
@@ -62,7 +57,7 @@ public class Vector4 {
         return matrixMultiplication4x4(rotateXY);
     }
 
-    public Vector4 rotateW(float angle) {
+    public Vec4f rotateW(float angle) {
         float[][] rotateZW = new float[][]{
                 {1, 0, 0, 0},
                 {0, 1, 0, 0},
@@ -73,12 +68,14 @@ public class Vector4 {
         return matrixMultiplication4x4(rotateZW);
     }
 
-    public Vector4 matrixMultiplication4x4(float[][] mat) {
+    public Vec4f matrixMultiplication4x4(float[][] mat) {
         float xn = mat[0][0] * x + mat[1][0] * y + mat[2][0] * z + mat[3][0] * w;
         float yn = mat[0][1] * x + mat[1][1] * y + mat[2][1] * z + mat[3][1] * w;
         float zn = mat[0][2] * x + mat[1][2] * y + mat[2][2] * z + mat[3][2] * w;
         float wn = mat[0][3] * x + mat[1][3] * y + mat[2][3] * z + mat[3][3] * w;
 
-        return new Vector4(xn, yn, zn, wn);
+        return new Vec4f(xn, yn, zn, wn);
     }
+
+    public static final Codec<Vec4f> CODEC = Codec.FLOAT.listOf().xmap(l -> new Vec4f(l.get(0), l.get(1), l.get(2), l.get(3)), v -> Lists.newArrayList(v.x, v.y, v.z, v.w));
 }

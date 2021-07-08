@@ -120,7 +120,7 @@ public class DimensionTypeBuilder {
     }
 
     public DimensionType build() {
-        return DimensionType.method_32922(
+        return DimensionType.create(
                 fixedTime, skylight, ceiling, ultrawarm, natural,
                 coordinateScale, false, piglinSafe, !bedsExplode, respawnAnchorsExplode,
                 raids,  minY, height, logicalHeight, biomeAccessType, Tesseract.id("none"), skyPropertiesKey, ambientLight);
