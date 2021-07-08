@@ -16,14 +16,15 @@ public class MissingSkyboxRenderer extends SkyboxRenderer {
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(false);
 
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, Tesseract.id("missing_texture"));
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
 
-        for (int i = 0; i < 6; ++i) {
+        for(int i = 0; i < 6; ++i) {
             stack.push();
-            switch (i) {
+            switch(i) {
                 case 1 -> stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
                 case 2 -> stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
                 case 3 -> stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));

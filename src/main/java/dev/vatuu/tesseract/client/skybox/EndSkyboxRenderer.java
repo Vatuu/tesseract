@@ -12,6 +12,7 @@ public class EndSkyboxRenderer extends SkyboxRenderer {
 
     private static final Identifier END_SKY = new Identifier("textures/environment/end_sky.png");
 
+    @Override
     public void renderSky(MatrixStack matrices, ClientWorld w, Camera cam, float tickDelta) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
@@ -25,25 +26,12 @@ public class EndSkyboxRenderer extends SkyboxRenderer {
 
         for(int i = 0; i < 6; ++i) {
             matrices.push();
-
-            if (i == 1) {
-                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
-            }
-
-            if (i == 2) {
-                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
-            }
-
-            if (i == 3) {
-                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
-            }
-
-            if (i == 4) {
-                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
-            }
-
-            if (i == 5) {
-                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-90.0F));
+            switch(i) {
+                case 1 -> matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
+                case 2 -> matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
+                case 3 -> matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
+                case 4 -> matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
+                case 5 -> matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-90.0F));
             }
 
             Matrix4f matrix4f = matrices.peek().getModel();

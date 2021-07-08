@@ -18,7 +18,7 @@ public abstract class WorldRendererMixin {
 
     @Shadow @Final private MinecraftClient client;
 
-    @Inject(method = "renderSky", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderSky", at = @At(value = "INVOKE", target = "Ljava/lang/Runnable;run()V", shift = At.Shift.AFTER), cancellable = true)
     public void renderTesseractSkybox(MatrixStack stack, Matrix4f matrix4f, float delta, Runnable runnable, CallbackInfo info) {
         ClientWorld w = this.client.world;
         if(w.getSkyProperties() instanceof TesseractSkyProperties) {
