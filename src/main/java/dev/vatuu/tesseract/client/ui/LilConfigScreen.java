@@ -8,18 +8,25 @@ import dev.vatuu.tesseract.lil.LilTesseractSettings;
 import dev.vatuu.tesseract.client.rendering.TesseractRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
 
 public class LilConfigScreen extends Screen {
+
+    private static final Text TITLE = new TranslatableText("gui.tesseract.lil_tesseract.title");
+    private static final Identifier TEXTURE = new Identifier(Tesseract.MOD_ID, "textures/gui/gui.png");
 
     private final LilTesseractSettings settings;
     private final TesseractRenderer renderer;
@@ -28,20 +35,20 @@ public class LilConfigScreen extends Screen {
     private CheckboxWidget buttonWireframe;
 
     public LilConfigScreen(LilTesseractSettings settings) {
-        super(new TranslatableText("Tesseract Configuration"));
+        super(TITLE);
         this.settings = settings;
         this.renderer = new LilTesseractRenderer();
     }
 
     @Override
     public void init() {
-        super.init();
-        this.rotateX = addSelectableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 49, 126, 20, settings.rotations.x()));
-        this.rotateY = addSelectableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 24, 126, 20, settings.rotations.y()));
-        this.rotateZ = addSelectableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 1, 126, 20, settings.rotations.z()));
-        this.rotateW = addSelectableChild(new RotationSliderWidget(width / 2 - 80, height / 2 + 24, 126, 20, settings.rotations.w()));
-        this.buttonWireframe = addSelectableChild(new CheckboxWidget(width /2 - 113, height / 2 + 50, 20, 20, new LiteralText("Wireframe"), settings.isWireframe));
-        addSelectableChild(new ButtonWidget(width / 2 + 80, height / 2 + 50, textRenderer.getWidth("Apply") + 10, 20, new LiteralText("Apply"), (b) -> {
+        this.rotateX = addDrawableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 49, 126, 20, settings.rotations.x()));
+        this.rotateY = addDrawableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 24, 126, 20, settings.rotations.y()));
+        this.rotateZ = addDrawableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 1, 126, 20, settings.rotations.z()));
+        this.rotateW = addDrawableChild(new RotationSliderWidget(width / 2 - 80, height / 2 + 24, 126, 20, settings.rotations.w()));
+        this.buttonWireframe = addDrawableChild(new CheckboxWidget(width /2 - 113, height / 2 + 50, 20, 20, new TranslatableText("gui.tesseract.lil_tesseract.wireframe"), settings.isWireframe));
+        Text applyText = new TranslatableText("gui.tesseract.lil_tesseract.apply");
+        addDrawableChild(new ButtonWidget(width / 2 + 80, height / 2 + 50, textRenderer.getWidth(applyText) + 10, 20, applyText, (b) -> {
             this.settings.isWireframe = buttonWireframe.isChecked();
             this.settings.rotations = new Vec4f(rotateX.getValue(), rotateY.getValue(), rotateZ.getValue(), rotateW.getValue());
         }));
@@ -50,7 +57,7 @@ public class LilConfigScreen extends Screen {
     @Override
     public void render(MatrixStack stack, int mouseX, int mouseY, float delta) {
         renderBackground(stack);
-        RenderSystem.setShaderTexture(0, new Identifier(Tesseract.MOD_ID, "textures/gui/gui.png"));
+        RenderSystem.setShaderTexture(0, TEXTURE);
 
         drawTexture(stack, width / 2 - 126, height / 2 - 83, 0, 0,256, 166);
         drawTexture(stack, width / 2 - 113, height / 2 - 49, 60, 166, 20, 20); //X
@@ -58,24 +65,25 @@ public class LilConfigScreen extends Screen {
         drawTexture(stack, width / 2 - 113, height / 2 - 1, 100, 166, 20, 20); //Z
         drawTexture(stack, width / 2 - 113, height / 2 + 24, 120, 166, 20, 20); //W
 
-        drawCenteredText(stack, this.textRenderer, "'lil Tesseract Configuration", width / 2, height / 2 - 73, 0x404040);
+        int titleWidth = textRenderer.getWidth(TITLE);
+        textRenderer.draw(stack, TITLE, width / 2F - titleWidth / 2F, height / 2F - 73, Formatting.DARK_GRAY.getColorValue());
 
-        drawTesseract(stack,width / 2 + 73,height / 2 - 20, 30);
+        drawTesseract(stack,width / 2 + 73,height / 2 - 20);
 
         super.render(stack, mouseX, mouseY, delta);
 
         renderer.updateRotation(new Vec4f(rotateX.getValue(), rotateY.getValue(), rotateZ.getValue(), rotateW.getValue()));
     }
 
-    private void drawTesseract(MatrixStack stack, int x, int y, int size) {
+    private void drawTesseract(MatrixStack stack, int x, int y) {
         stack.push();
 
         stack.translate((float)x, (float)y, 1100.0F);
         stack.scale(1.0F, 1.0F, -1.0F);
         stack.translate(0.0D, 0.0D, 1000.0D);
-        stack.scale((float)size, (float)size, (float)size);
-        stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(0.0f));
-        stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(0.0f));
+        stack.scale(30.0F, 30.0F, 30.0F);
+        stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(60.0f));
+        stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(45.0f));
         stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(0.0f));
         VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
         renderer.render(stack, immediate, 3);
