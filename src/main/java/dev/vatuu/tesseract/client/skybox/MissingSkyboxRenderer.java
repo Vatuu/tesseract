@@ -3,10 +3,8 @@ package dev.vatuu.tesseract.client.skybox;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.vatuu.tesseract.Tesseract;
 import net.minecraft.client.render.*;
-import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 
@@ -18,28 +16,19 @@ public class MissingSkyboxRenderer extends SkyboxRenderer {
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(false);
 
-        getTextureManager().bindTexture(Tesseract.id("what"));
+        RenderSystem.setShaderTexture(0, Tesseract.id("missing_texture"));
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
 
-        for(int i = 0; i < 6; ++i) {
+        for (int i = 0; i < 6; ++i) {
             stack.push();
             switch (i) {
-                case 1:
-                    stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
-                    break;
-                case 2:
-                    stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
-                    break;
-                case 3:
-                    stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
-                    break;
-                case 4:
-                    stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
-                    break;
-                case 5:
-                    stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-90.0F));
+                case 1 -> stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
+                case 2 -> stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
+                case 3 -> stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
+                case 4 -> stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
+                case 5 -> stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-90.0F));
             }
 
             Matrix4f matrix4f = stack.peek().getModel();

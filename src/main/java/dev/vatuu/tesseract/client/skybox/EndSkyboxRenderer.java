@@ -12,43 +12,48 @@ public class EndSkyboxRenderer extends SkyboxRenderer {
 
     private static final Identifier END_SKY = new Identifier("textures/environment/end_sky.png");
 
-    public void renderSky(MatrixStack stack, ClientWorld w, Camera cam, float tickDelta) {
+    public void renderSky(MatrixStack matrices, ClientWorld w, Camera cam, float tickDelta) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.depthMask(false);
 
-        getTextureManager().bindTexture(END_SKY);
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShaderTexture(0, END_SKY);
 
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
 
         for(int i = 0; i < 6; ++i) {
-            stack.push();
-            switch(i) {
-                case 1:
-                    stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
-                    break;
-                case 2:
-                    stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
-                    break;
-                case 3:
-                    stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
-                    break;
-                case 4:
-                    stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
-                    break;
-                case 5:
-                    stack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-90.0F));
+            matrices.push();
+
+            if (i == 1) {
+                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
             }
 
-            Matrix4f matrix4f = stack.peek().getModel();
-            bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
-            bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).color(40, 40, 40, 255).texture(0.0F, 0.0F).next();
-            bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).color(40, 40, 40, 255).texture(0.0F, 16.0F).next();
-            bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).color(40, 40, 40, 255).texture(16.0F, 16.0F).next();
-            bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).color(40, 40, 40, 255).texture(16.0F, 0.0F).next();
+            if (i == 2) {
+                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-90.0F));
+            }
+
+            if (i == 3) {
+                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
+            }
+
+            if (i == 4) {
+                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
+            }
+
+            if (i == 5) {
+                matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-90.0F));
+            }
+
+            Matrix4f matrix4f = matrices.peek().getModel();
+            bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
+            bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).texture(0.0F, 0.0F).color(40, 40, 40, 255).next();
+            bufferBuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).texture(0.0F, 16.0F).color(40, 40, 40, 255).next();
+            bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).texture(16.0F, 16.0F).color(40, 40, 40, 255).next();
+            bufferBuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).texture(16.0F, 0.0F).color(40, 40, 40, 255).next();
             tessellator.draw();
-            stack.pop();
+            matrices.pop();
         }
 
         RenderSystem.depthMask(true);
