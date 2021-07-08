@@ -86,7 +86,9 @@ public class LilTesseractBlockEntity extends BlockEntity {
 
         @Override
         public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-            MinecraftClient.getInstance().openScreen(new LilConfigScreen(((LilTesseractBlockEntity)world.getBlockEntity(pos)).settings));
+            if (world.isClient) {
+                MinecraftClient.getInstance().openScreen(new LilConfigScreen(((LilTesseractBlockEntity) world.getBlockEntity(pos)).settings));
+            }
             return ActionResult.SUCCESS;
         }
 

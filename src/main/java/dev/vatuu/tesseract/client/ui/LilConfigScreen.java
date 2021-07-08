@@ -1,5 +1,6 @@
 package dev.vatuu.tesseract.client.ui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import dev.vatuu.tesseract.Tesseract;
 import dev.vatuu.tesseract.client.rendering.LilTesseractRenderer;
 import dev.vatuu.tesseract.client.rendering.Vec4f;
@@ -32,7 +33,9 @@ public class LilConfigScreen extends Screen {
         this.renderer = new LilTesseractRenderer();
     }
 
-    public void init(){
+    @Override
+    public void init() {
+        super.init();
         this.rotateX = addSelectableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 49, 126, 20, settings.rotations.x()));
         this.rotateY = addSelectableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 24, 126, 20, settings.rotations.y()));
         this.rotateZ = addSelectableChild(new RotationSliderWidget(width / 2 - 80, height / 2 - 1, 126, 20, settings.rotations.z()));
@@ -47,7 +50,7 @@ public class LilConfigScreen extends Screen {
     @Override
     public void render(MatrixStack stack, int mouseX, int mouseY, float delta) {
         renderBackground(stack);
-        MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(Tesseract.MOD_ID, "textures/gui/gui.png"));
+        RenderSystem.setShaderTexture(0, new Identifier(Tesseract.MOD_ID, "textures/gui/gui.png"));
 
         drawTexture(stack, width / 2 - 126, height / 2 - 83, 0, 0,256, 166);
         drawTexture(stack, width / 2 - 113, height / 2 - 49, 60, 166, 20, 20); //X
