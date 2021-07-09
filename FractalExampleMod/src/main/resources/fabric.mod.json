@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "id": "tessarecttestmod",
-  "version": "1.0.0",
+  "id": "fractaltest",
+  "version": "1.0",
 
-  "name": "Tesseract Test Mod",
-  "description": "Test mod for basic tesseract features",
+  "name": "Fractal Test Mod",
+  "description": "Test mod for basic fractal features",
   "licence": "MIT",
   "authors": [
     "Vatuu", "PhoenixVX"
   ],
   "entrypoints": {
     "main": [
-      "dev.vatuu.tesseracttestmod.TesseractTestModInit"
+      "dev.teamtesseract.fractaltest.FractalTest"
     ]
   },
   "depends": {
-    "tesseract": "*",
+    "fractal": "*",
     "fabricloader": ">=0.4.0",
     "fabric": "*"
   }
