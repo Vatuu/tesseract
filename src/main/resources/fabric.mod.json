@@ -1,32 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "tesseract",
+  "id": "fractal",
   "version": "${version}",
 
-  "name": "Tesseract API",
+  "name": "Fractal Dimension API",
   "description": "A lightweight dimensional API for disposable, low-overhead pocket dimensions.",
   "authors": [ "Vatuu" ],
 
-  "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/tesseract-api",
-    "sources": "https://github.com/vatuu/tesseract"
-  },
-
   "license": "MIT",
-  "icon": "assets/tesseract/icon.png",
+  "icon": "assets/fractal/icon.png",
   "custom": {
     "modmenu:api": true
   },
 
-  "accessWidener": "tesseract.widener",
+  "accessWidener": "fractal.widener",
 
   "entrypoints": {
-    "main": [ "dev.vatuu.tesseract.Tesseract" ],
-    "client": [ "dev.vatuu.tesseract.client.TesseractClient" ]
+    "main": [
+      "dev.teamtesseract.fractal.Fractal"
+    ],
+    "client": [
+      "dev.teamtesseract.fractal.client.FractalClient"
+    ]
   },
   "mixins": [
-    "mixins.tesseract.json",
-    "mixins.client.tesseract.json"
+    "mixins.fractal.json",
+    "mixins.client.fractal.json"
   ],
 
   "depends": {

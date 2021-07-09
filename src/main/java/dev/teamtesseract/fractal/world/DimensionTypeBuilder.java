@@ -1,0 +1,132 @@
+package dev.teamtesseract.fractal.world;
+
+import dev.teamtesseract.fractal.registry.FractalException;
+import dev.teamtesseract.fractal.registry.FractalRegistry;
+import dev.teamtesseract.fractal.Fractal;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.source.BiomeAccessType;
+import net.minecraft.world.biome.source.VoronoiBiomeAccessType;
+import net.minecraft.world.dimension.DimensionType;
+
+import java.util.OptionalLong;
+
+public class DimensionTypeBuilder {
+
+    public static final Identifier SKYPROPERTIES_OVERWORLD = new Identifier("overworld");
+    public static final Identifier SKYPROPERTIES_END = new Identifier("the_end");
+
+    private final Identifier name;
+    private final BiomeAccessType biomeAccessType;
+
+    private boolean ultrawarm = false, natural = true, skylight = true, ceiling = false, piglinSafe = false, bedsExplode = false, respawnAnchorsExplode = false, beesExplode = false, raids = false;
+    private int logicalHeight = 256, minY = 0, height = 256;
+    private OptionalLong fixedTime = OptionalLong.empty();
+    private float coordinateScale = 1, ambientLight = 0;
+    private Identifier skyPropertiesKey = Fractal.id("none");
+
+
+    private DimensionTypeBuilder(Identifier id, BiomeAccessType biomeAccess) {
+        this.name = id;
+        this.biomeAccessType = biomeAccess;
+    }
+
+    public static DimensionTypeBuilder create(Identifier id) {
+        return create(id, VoronoiBiomeAccessType.INSTANCE);
+    }
+
+    public static DimensionTypeBuilder create(Identifier id, BiomeAccessType accessType) {
+        return new DimensionTypeBuilder(id, accessType);
+    }
+
+    public DimensionTypeBuilder isUltrawarm(boolean is) {
+        this.ultrawarm = is;
+        return this;
+    }
+
+    public DimensionTypeBuilder isNatural(boolean is) {
+        this.natural = is;
+        return this;
+    }
+
+    public DimensionTypeBuilder hasSkylight(boolean has) {
+        this.skylight = has;
+        return this;
+    }
+
+    public DimensionTypeBuilder hasCeiling(boolean has) {
+        this.ceiling = has;
+        return this;
+    }
+
+    public DimensionTypeBuilder isPiglinSafe(boolean is) {
+        this.piglinSafe = is;
+        return this;
+    }
+
+    public DimensionTypeBuilder doBedsExplode(boolean is) {
+        this.bedsExplode = is;
+        return this;
+    }
+
+    public DimensionTypeBuilder doBeesExplode(boolean is) {
+        this.beesExplode = is;
+        return this;
+    }
+
+    public DimensionTypeBuilder doRespawnAnchorsExplode(boolean is) {
+        this.respawnAnchorsExplode = is;
+        return this;
+    }
+
+    public DimensionTypeBuilder hasRaids(boolean has) {
+        this.raids = has;
+        return this;
+    }
+
+    public DimensionTypeBuilder setLogicalHeight(int height) {
+        this.logicalHeight = height;
+        return this;
+    }
+
+    public DimensionTypeBuilder setMinimumY(int y) {
+        this.minY = y;
+        return this;
+    }
+
+    public DimensionTypeBuilder setBlockHeight(int height) {
+        this.height = height;
+        return this;
+    }
+
+    public DimensionTypeBuilder setFixedTime(long time) {
+        this.fixedTime = OptionalLong.of(time);
+        return this;
+    }
+
+    public DimensionTypeBuilder setCoordinateScaling(float factor) {
+        this.coordinateScale = factor;
+        return this;
+    }
+
+    public DimensionTypeBuilder setAmbientLightLevel(float light) {
+        this.ambientLight = light;
+        return this;
+    }
+
+    public DimensionTypeBuilder setSkyProperties(Identifier id) {
+        this.skyPropertiesKey = id;
+        return this;
+    }
+
+    public DimensionType build() {
+        return DimensionType.create(
+                fixedTime, skylight, ceiling, ultrawarm, natural,
+                coordinateScale, false, piglinSafe, !bedsExplode, respawnAnchorsExplode,
+                raids,  minY, height, logicalHeight, biomeAccessType, Fractal.id("none"), skyPropertiesKey, ambientLight);
+    }
+
+    public RegistryKey<DimensionType> register() throws FractalException {
+        return FractalRegistry.getInstance().registerDimension(build(), name);
+    }
+}

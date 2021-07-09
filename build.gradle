@@ -7,7 +7,7 @@ archivesBaseName = project.archives_base_name
 group = project.maven_group
 
 loom {
-	accessWidener "src/main/resources/tesseract.widener"
+	accessWidener "src/main/resources/fractal.widener"
 }
 
 subprojects {

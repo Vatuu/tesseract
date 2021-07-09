@@ -7,5 +7,5 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-include 'tesseract-test-mod'
+include 'FractalExampleMod'
 

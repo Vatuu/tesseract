@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "dev.teamtesseract.fractal.client.extensions.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "injectors": { "defaultRequire": 1 },
+
+  "client": [
+    "SkyPropertiesMixin",
+    "PlayerEntityRendererMixin",
+    "WorldRendererMixin"
+  ]
+}
