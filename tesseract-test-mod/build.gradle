@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+group 'dev.vatuu'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}

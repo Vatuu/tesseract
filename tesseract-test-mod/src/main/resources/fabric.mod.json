@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "tessarecttestmod",
+  "version": "1.0.0",
+
+  "name": "Tesseract Test Mod",
+  "description": "Test mod for basic tesseract features",
+  "licence": "MIT",
+  "authors": [
+    "Vatuu", "PhoenixVX"
+  ],
+  "entrypoints": {
+    "main": [
+      "dev.vatuu.tesseracttestmod.TesseractTestModInit"
+    ]
+  },
+  "depends": {
+    "tesseract": "*",
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  }
+}
